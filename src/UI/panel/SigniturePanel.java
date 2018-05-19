@@ -5,13 +5,13 @@ import UI.constant.UIConstants;
 import javax.swing.*;
 import java.awt.*;
 
-public class PicturePanel extends FunctionPanel {
+public class SigniturePanel extends FunctionPanel {
     /**
      * 构造
      * created in 23:25 2018/5/3
      */
-    public PicturePanel() {
-        super("picture");
+    public SigniturePanel() {
+        super("signiture");
     }
 
     /**

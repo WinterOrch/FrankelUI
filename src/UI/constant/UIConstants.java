@@ -87,6 +87,10 @@ public class UIConstants {
     public final static ImageIcon ICON_MESSAGE = new ImageIcon(MainWindow.class.getResource("/icon/message-normal.png"));
     public final static ImageIcon ICON_MESSAGE_READY = new ImageIcon(MainWindow.class.getResource("/icon/message-ready.png"));
     public final static ImageIcon ICON_MESSAGE_PRESSED = new ImageIcon(MainWindow.class.getResource("/icon/message-pressed.png"));
+
+    public final static ImageIcon ICON_SIGNITURE = new ImageIcon(MainWindow.class.getResource("/icon/signiture-normal.png"));
+    public final static ImageIcon ICON_SIGNITURE_READY = new ImageIcon(MainWindow.class.getResource("/icon/signiture-ready.png"));
+    public final static ImageIcon ICON_SIGNITURE_PRESSED = new ImageIcon(MainWindow.class.getResource("/icon/signiture-pressed.png"));
     /**
      * 表格线条背景色
      */

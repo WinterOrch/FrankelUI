@@ -9,9 +9,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-
-@SuppressWarnings("Duplicates")
-public class SettingPanel extends JPanel {
+public class SettingPanel extends FunctionPanel {
     private static JPanel panelOption;
     private static JPanel panelAbout;
     private static JPanel settingPanelMain;
@@ -23,54 +21,17 @@ public class SettingPanel extends JPanel {
      * created in 21:02 2018/4/30
      */
     public SettingPanel() {
-        initialize();
-        addComponent();
-        addListener();
-    }
-
-    /**
-     * 初始化
-     * created in 21:02 2018/4/30
-     */
-    private void initialize(){
-        this.setBackground(UIConstants.MAIN_BACK_COLOR);
-        this.setLayout(new BorderLayout());
-        settingPanelOption = new Setting_OptionPanel();
-        settingPanelAbout = new Setting_AboutPanel();
-    }
-
-    /**
-     * 添加组件
-     * created in 21:07 2018/4/30
-     */
-    private void addComponent() {
-        this.add(getUpPanel(), BorderLayout.NORTH);
-        this.add(getCenterPanel(), BorderLayout.CENTER);
-    }
-
-    /**
-     * 上部横条
-     * created in 21:08 2018/4/30
-     */
-    private JPanel getUpPanel() {
-        JPanel panelUp = new JPanel();
-        panelUp.setBackground(UIConstants.MAIN_BACK_COLOR);
-        panelUp.setLayout(new FlowLayout(FlowLayout.LEFT, UIConstants.MAIN_H_GAP, 5));
-
-        JLabel labelTitle = new JLabel(PropertiesLocale.getProperty("UI.SETTING.TITLE"));
-        labelTitle.setFont(UIConstants.FONT_TITLE);
-        labelTitle.setForeground(UIConstants.NAVI_BAR_BACK_COLOR);
-        panelUp.add(labelTitle);
-        //panelUp.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-
-        return panelUp;
+        super("setting");
     }
 
     /**
      * 中间选择列表
      * created in 21:37 2018/4/30
      */
-    private JPanel getCenterPanel() {
+    public JPanel getCenterPanel() {
+        // 初始化
+        settingPanelOption = new Setting_OptionPanel();
+        settingPanelAbout = new JPanel();
         // 中间面板
         JPanel panelCenter = new JPanel();
         panelCenter.setBackground(UIConstants.MAIN_BACK_COLOR);
@@ -122,7 +83,7 @@ public class SettingPanel extends JPanel {
      * 添加监听器
      * created in 21:39 2018/4/30
      */
-    private void addListener(){
+    public void addListener(){
         panelOption.addMouseListener(new MouseListener() {
             @Override
             public void mouseReleased(MouseEvent e) {
@@ -193,17 +154,4 @@ public class SettingPanel extends JPanel {
         });
     }
 
-
-    /**
-     * 改变语言，实时更新UI
-     * created in 23:37 2018/4/30
-     */
-    public void refreshLocale(){
-        this.removeAll();
-        this.initialize();
-        this.addComponent();
-        this.addListener();
-
-        this.updateUI();
-    }
 }

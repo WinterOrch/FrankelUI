@@ -10,7 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 @SuppressWarnings("Duplicates")
-public class MessagePanel extends JPanel {
+public class MessagePanel extends FunctionPanel {
     private static JPanel listPanelBmpEncode;
     private static JPanel listPanelBmpDecode;
     private static JPanel messagePanelMain;
@@ -22,55 +22,17 @@ public class MessagePanel extends JPanel {
      * created in 23:25 2018/5/3
      */
     public MessagePanel() {
-        initialize();
-        addComponent();
-        addListener();
-    }
-
-    /**
-     * 初始化
-     * created in 23:26 2018/5/3
-     */
-    private void initialize() {
-        this.setBackground(UIConstants.MAIN_BACK_COLOR);
-        this.setLayout(new BorderLayout());
-        messagePanelBmpEncode = new Message_BMPEncodePanel();
-        messagePanelBmpDecode = new Message_BMPDecodePanel();
-        //TODO
-
-    }
-
-    /**
-     * 添加组件
-     * created in 23:28 2018/5/3
-     */
-    private void addComponent() {
-        this.add(getUpPanel(), BorderLayout.NORTH);
-        this.add(getCenterPanel(), BorderLayout.CENTER);
-    }
-
-    /**
-     * 上方横条
-     * created in 23:29 2018/5/3
-     */
-    private JPanel getUpPanel() {
-        JPanel panelUp = new JPanel();
-        panelUp.setBackground(UIConstants.MAIN_BACK_COLOR);
-        panelUp.setLayout(new FlowLayout(FlowLayout.LEFT, UIConstants.MAIN_H_GAP, 5));
-
-        JLabel labelTitle = new JLabel(PropertiesLocale.getProperty("UI.MESSAGE.TITLE"));
-        labelTitle.setFont(UIConstants.FONT_TITLE);
-        labelTitle.setForeground(UIConstants.NAVI_BAR_BACK_COLOR);
-        panelUp.add(labelTitle);
-
-        return panelUp;
+        super("message");
     }
 
     /**
      * 中部主界面
      * created in 23:32 2018/5/3
      */
-    private JPanel getCenterPanel() {
+    public JPanel getCenterPanel() {
+        // 初始化
+        messagePanelBmpEncode = new Message_BMPEncodePanel();
+        messagePanelBmpDecode = new Message_BMPDecodePanel();
         // 中间面板
         JPanel panelCenter = new JPanel();
         panelCenter.setBackground(UIConstants.MAIN_BACK_COLOR);
@@ -123,7 +85,7 @@ public class MessagePanel extends JPanel {
      * 添加监听器
      * created in 23:34 2018/5/3
      */
-    private void addListener() {
+    public void addListener() {
         listPanelBmpEncode.addMouseListener(new MouseListener() {
             @Override
             public void mouseReleased(MouseEvent e) {
@@ -193,17 +155,5 @@ public class MessagePanel extends JPanel {
             }
         });
         //TODO
-    }
-
-    /**
-     * 改变语言，实时更新UI
-     * created in 0:25 2018/5/5
-     */
-    public void refreshLocale(){
-        this.removeAll();
-        this.initialize();
-        this.addComponent();
-        this.addListener();
-        this.updateUI();
     }
 }

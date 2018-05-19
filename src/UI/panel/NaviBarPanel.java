@@ -19,6 +19,7 @@ import java.awt.event.ActionListener;
 public class NaviBarPanel extends JPanel{
     private static NaviIconButton messageButton;
     private static NaviIconButton pictureButton;
+    private static NaviIconButton signitureButton;
     private static NaviIconButton settingButton;
 
     /**
@@ -61,11 +62,14 @@ public class NaviBarPanel extends JPanel{
                 UIConstants.ICON_MESSAGE_READY, PropertiesLocale.getProperty("UI.MESSAGE.TITLE"));
         pictureButton = new NaviIconButton(UIConstants.ICON_PICTURE, UIConstants.ICON_PICTURE_PRESSED,
                 UIConstants.ICON_PICTURE_READY, PropertiesLocale.getProperty("UI.PICTURE.TITLE"));
+        signitureButton = new NaviIconButton(UIConstants.ICON_SIGNITURE, UIConstants.ICON_SIGNITURE_PRESSED,
+                UIConstants.ICON_SIGNITURE_READY, PropertiesLocale.getProperty("UI.PICTURE.TITLE"));
         settingButton = new NaviIconButton(UIConstants.ICON_SETTING, UIConstants.ICON_SETTING_PRESSED,
                 UIConstants.ICON_SETTING_READY, PropertiesLocale.getProperty("UI.SETTING.TITLE"));
 
         upPanel.add(messageButton);
         upPanel.add(pictureButton);
+        upPanel.add(signitureButton);
 
         downPanel.add(settingButton, BorderLayout.SOUTH);
         this.add(upPanel);
@@ -83,6 +87,7 @@ public class NaviBarPanel extends JPanel{
                 messageButton.setIcon(UIConstants.ICON_MESSAGE_PRESSED);
                 //TODO
                 pictureButton.setIcon(UIConstants.ICON_PICTURE);
+                signitureButton.setIcon(UIConstants.ICON_SIGNITURE);
                 settingButton.setIcon(UIConstants.ICON_SETTING);
 
                 MainWindow.centerPanel.removeAll();
@@ -98,6 +103,7 @@ public class NaviBarPanel extends JPanel{
                 messageButton.setIcon(UIConstants.ICON_MESSAGE);
                 //TODO
                 pictureButton.setIcon(UIConstants.ICON_PICTURE_PRESSED);
+                signitureButton.setIcon(UIConstants.ICON_SIGNITURE);
                 settingButton.setIcon(UIConstants.ICON_SETTING);
 
                 MainWindow.centerPanel.removeAll();
@@ -112,12 +118,29 @@ public class NaviBarPanel extends JPanel{
             public void actionPerformed(ActionEvent e) {
                 messageButton.setIcon(UIConstants.ICON_MESSAGE);
                 pictureButton.setIcon(UIConstants.ICON_PICTURE);
+                signitureButton.setIcon(UIConstants.ICON_SIGNITURE);
                 //TODO
                 settingButton.setIcon(UIConstants.ICON_SETTING_PRESSED);
 
                 MainWindow.centerPanel.removeAll();
                 //SettingPanel.getContent();
                 MainWindow.centerPanel.add(MainWindow.settingPanel, BorderLayout.CENTER);
+                MainWindow.centerPanel.updateUI();
+            }
+        });
+
+        signitureButton.addActionListener( new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                messageButton.setIcon(UIConstants.ICON_MESSAGE);
+                pictureButton.setIcon(UIConstants.ICON_PICTURE);
+                signitureButton.setIcon(UIConstants.ICON_SIGNITURE_PRESSED);
+                //TODO
+                settingButton.setIcon(UIConstants.ICON_SETTING);
+
+                MainWindow.centerPanel.removeAll();
+                //SettingPanel.getContent();
+                MainWindow.centerPanel.add(MainWindow.signiturePanel, BorderLayout.CENTER);
                 MainWindow.centerPanel.updateUI();
             }
         });
@@ -131,6 +154,7 @@ public class NaviBarPanel extends JPanel{
         //TODO
         messageButton.setToolTipText(PropertiesLocale.getProperty("UI.MESSAGE.TITLE"));
         pictureButton.setToolTipText(PropertiesLocale.getProperty("UI.PICTURE.TITLE"));
+        signitureButton.setToolTipText(PropertiesLocale.getProperty("UI.SIGNITURE.TITLE"));
         settingButton.setToolTipText(PropertiesLocale.getProperty("UI.SETTING.TITLE"));
     }
 }
