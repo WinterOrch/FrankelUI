@@ -81,68 +81,56 @@ public class NaviBarPanel extends JPanel{
      * created in 1:00 2018/4/30
      */
     private void addListener(){
-        messageButton.addActionListener( new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                messageButton.setIcon(UIConstants.ICON_MESSAGE_PRESSED);
-                //TODO
-                pictureButton.setIcon(UIConstants.ICON_PICTURE);
-                signitureButton.setIcon(UIConstants.ICON_SIGNITURE);
-                settingButton.setIcon(UIConstants.ICON_SETTING);
+        messageButton.addActionListener(e -> {
+            messageButton.setIcon(UIConstants.ICON_MESSAGE_PRESSED);
+            //TODO
+            pictureButton.setIcon(UIConstants.ICON_PICTURE);
+            signitureButton.setIcon(UIConstants.ICON_SIGNITURE);
+            settingButton.setIcon(UIConstants.ICON_SETTING);
 
-                MainWindow.centerPanel.removeAll();
-                //MessagePanel.getContent();
-                MainWindow.centerPanel.add(MainWindow.messagePanel, BorderLayout.CENTER);
-                MainWindow.centerPanel.updateUI();
-            }
+            MainWindow.centerPanel.removeAll();
+            //MessagePanel.getContent();
+            MainWindow.centerPanel.add(MainWindow.messagePanel, BorderLayout.CENTER);
+            MainWindow.centerPanel.updateUI();
         });
 
-        pictureButton.addActionListener( new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                messageButton.setIcon(UIConstants.ICON_MESSAGE);
-                //TODO
-                pictureButton.setIcon(UIConstants.ICON_PICTURE_PRESSED);
-                signitureButton.setIcon(UIConstants.ICON_SIGNITURE);
-                settingButton.setIcon(UIConstants.ICON_SETTING);
+        pictureButton.addActionListener(e -> {
+            messageButton.setIcon(UIConstants.ICON_MESSAGE);
+            //TODO
+            pictureButton.setIcon(UIConstants.ICON_PICTURE_PRESSED);
+            signitureButton.setIcon(UIConstants.ICON_SIGNITURE);
+            settingButton.setIcon(UIConstants.ICON_SETTING);
 
-                MainWindow.centerPanel.removeAll();
-                //PicturePanel.getContent();
-                MainWindow.centerPanel.add(MainWindow.picturePanel, BorderLayout.CENTER);
-                MainWindow.centerPanel.updateUI();
-            }
+            MainWindow.centerPanel.removeAll();
+            //PicturePanel.getContent();
+            MainWindow.centerPanel.add(MainWindow.picturePanel, BorderLayout.CENTER);
+            MainWindow.centerPanel.updateUI();
         });
 
-        settingButton.addActionListener( new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                messageButton.setIcon(UIConstants.ICON_MESSAGE);
-                pictureButton.setIcon(UIConstants.ICON_PICTURE);
-                signitureButton.setIcon(UIConstants.ICON_SIGNITURE);
-                //TODO
-                settingButton.setIcon(UIConstants.ICON_SETTING_PRESSED);
+        settingButton.addActionListener(e -> {
+            messageButton.setIcon(UIConstants.ICON_MESSAGE);
+            pictureButton.setIcon(UIConstants.ICON_PICTURE);
+            signitureButton.setIcon(UIConstants.ICON_SIGNITURE);
+            //TODO
+            settingButton.setIcon(UIConstants.ICON_SETTING_PRESSED);
 
-                MainWindow.centerPanel.removeAll();
-                //SettingPanel.getContent();
-                MainWindow.centerPanel.add(MainWindow.settingPanel, BorderLayout.CENTER);
-                MainWindow.centerPanel.updateUI();
-            }
+            MainWindow.centerPanel.removeAll();
+            //SettingPanel.getContent();
+            MainWindow.centerPanel.add(MainWindow.settingPanel, BorderLayout.CENTER);
+            MainWindow.centerPanel.updateUI();
         });
 
-        signitureButton.addActionListener( new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                messageButton.setIcon(UIConstants.ICON_MESSAGE);
-                pictureButton.setIcon(UIConstants.ICON_PICTURE);
-                signitureButton.setIcon(UIConstants.ICON_SIGNITURE_PRESSED);
-                //TODO
-                settingButton.setIcon(UIConstants.ICON_SETTING);
+        signitureButton.addActionListener(e -> {
+            messageButton.setIcon(UIConstants.ICON_MESSAGE);
+            pictureButton.setIcon(UIConstants.ICON_PICTURE);
+            signitureButton.setIcon(UIConstants.ICON_SIGNITURE_PRESSED);
+            //TODO
+            settingButton.setIcon(UIConstants.ICON_SETTING);
 
-                MainWindow.centerPanel.removeAll();
-                //SettingPanel.getContent();
-                MainWindow.centerPanel.add(MainWindow.signiturePanel, BorderLayout.CENTER);
-                MainWindow.centerPanel.updateUI();
-            }
+            MainWindow.centerPanel.removeAll();
+            //SettingPanel.getContent();
+            MainWindow.centerPanel.add(MainWindow.signiturePanel, BorderLayout.CENTER);
+            MainWindow.centerPanel.updateUI();
         });
     }
 

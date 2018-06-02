@@ -40,7 +40,6 @@ public class MainWindow {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
                 | UnsupportedLookAndFeelException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -73,9 +72,7 @@ public class MainWindow {
 
         frame.addWindowListener(new WindowListener() {
 
-            @Override
             public void windowOpened(WindowEvent e) {
-                // TODO Auto-generated method stub
 
             }
 
@@ -134,14 +131,12 @@ public class MainWindow {
      * created in 0:35 2018/4/30
      */
     public static void main(String[] args) {
-        EventQueue.invokeLater( new Runnable() {
-            public void run() {
-                try {
-                    MainWindow window = new MainWindow();
-                    window.frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        EventQueue.invokeLater(() -> {
+            try {
+                MainWindow window = new MainWindow();
+                window.frame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }
