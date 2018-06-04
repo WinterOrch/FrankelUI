@@ -7,8 +7,6 @@ import UI.constant.PropertiesLocale;
 import UI.constant.UIConstants;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * 主窗口导航栏

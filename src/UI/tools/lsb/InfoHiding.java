@@ -3,17 +3,11 @@ package UI.tools.lsb;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.image.MemoryImageSource;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.zip.CRC32;
-import java.util.zip.CheckedOutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -125,18 +119,7 @@ class InfoHiding {
      */
     private void readMap32() throws IOException//读取32bit制式图像内容
     {
-        int len=(int) (this.originalBMP.length()-this.bh.ndataOffset);
-//      System.out.println("this.originalBMP.length()-this.bh.ndataOffset= "+len);
-        int ndata[] = new int[len];
-        this.originalImageData= new byte[len];
-        //       System.out.println("this.originalImageData.length= "+this.originalImageData.length);
-        //      System.out.println("(file.length-54)= "+(this.originalBMP.length()-54));
-
-        this.fs.skip(this.bh.ndataOffset-54);  //jump to the data position
-        //      System.out.println("bh.ndataOffset-54＝ "+(bh.ndataOffset-54));
-        this.fs.read(this.originalImageData,0,len);
-        fs.close();
-
+        this.readMap24();
     }
 
     /**
@@ -251,7 +234,7 @@ class InfoHiding {
     private void hideInfo16() //原理： 就是读出一个象素，拆开文本文件为一个一个bit，藏到每个象素的最低bit 下面的都一样
     {
         this.targetImageData=new byte[this.originalImageData.length];
-        for (int i=0;i<this.originalImageData.length;i++) this.targetImageData[i]=this.originalImageData[i];
+        System.arraycopy(this.originalImageData, 0, this.targetImageData, 0, this.originalImageData.length);
 
         int countPixel=0;
         int countText=0;
@@ -325,7 +308,7 @@ class InfoHiding {
     private void hideInfo24()
     {
         this.targetImageData=new byte[this.originalImageData.length];
-        for (int i=0;i<this.originalImageData.length;i++) this.targetImageData[i]=this.originalImageData[i];
+        System.arraycopy(this.originalImageData, 0, this.targetImageData, 0, this.originalImageData.length);
 
         int countPixel=0;
         int countText=0;
@@ -368,39 +351,7 @@ class InfoHiding {
      */
     private void hideInfo32()
     {
-        this.targetImageData=new byte[this.originalImageData.length];
-        for (int i=0;i<this.originalImageData.length;i++) this.targetImageData[i]=this.originalImageData[i];
-
-        int countPixel=0;
-        int countText=0;
-        while(countText<this.originalTextData.length)
-        {
-            byte textByte=this.originalTextData[countText];
-            byte tmpText;
-            byte tmpPixel;
-
-            tmpPixel=(byte) (this.originalImageData[countPixel] & 0xfc);
-            tmpText=(byte) (textByte & 0x03);
-            this.targetImageData[countPixel]=(byte) (tmpPixel + tmpText);
-            countPixel++;
-
-            tmpPixel=(byte) (this.originalImageData[countPixel] & 0xfc);
-            tmpText=(byte) ((textByte & 0x0c)>>2);
-            this.targetImageData[countPixel]=(byte) (tmpPixel + tmpText);
-            countPixel++;
-
-            tmpPixel=(byte) (this.originalImageData[countPixel] & 0xfc);
-            tmpText=(byte) ((textByte & 0x30)>>4);
-            this.targetImageData[countPixel]=(byte) (tmpPixel + tmpText);
-            countPixel++;
-
-            tmpPixel=(byte) (this.originalImageData[countPixel] & 0xfc);
-            tmpText=(byte) ((textByte & 0xc0)>>6);
-            this.targetImageData[countPixel]=(byte) (tmpPixel + tmpText);
-            countPixel++;
-            countText++;
-        }
-        Utility.extractInt(this.forReserved,this.bh.bf,6);
+        this.hideInfo24();
     }
 
     //write the targetBMPFile   //写目的图像文件
@@ -465,7 +416,6 @@ class InfoHiding {
                 try {
                     ih.readMap16();
                 } catch (IOException e) {
-                    // TODO 自动生成 catch 块
                     //  e.printStackTrace();
                     return 41;      //Fault 41: Fail to read BMP from stream (IOException)
                 }
@@ -478,7 +428,6 @@ class InfoHiding {
                 try {
                     ih.readMap24();
                 } catch (IOException e) {
-                    // TODO 自动生成 catch 块
                     //  e.printStackTrace();
                     return 41;      //Fault 41: Fail to read BMP from stream (IOException)
                 }
@@ -491,7 +440,6 @@ class InfoHiding {
                 try {
                     ih.readMap32();
                 } catch (IOException e) {
-                    // TODO 自动生成 catch 块
                     //  e.printStackTrace();
                     return 41;      //Fault 41: Fail to read BMP from stream (IOException)
                 }
