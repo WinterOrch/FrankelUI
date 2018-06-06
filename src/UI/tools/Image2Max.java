@@ -15,9 +15,9 @@ public class Image2Max {
      * created in 16:20 2018/6/4
      */
     public static double[][][] getBMPRGB(BufferedImage originImage)  {
-        int green = 0;
-        int red = 0;
-        int blue = 0;
+        int green;
+        int red;
+        int blue;
         int imageWidth = originImage.getWidth();
         int imageHeight = originImage.getHeight();
 

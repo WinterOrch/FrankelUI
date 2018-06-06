@@ -1,5 +1,7 @@
 package UI.tools.encryption;
 
+import UI.tools.ToolConstants;
+
 import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.UnsupportedEncodingException;
@@ -26,7 +28,7 @@ public class AES_Encryption {
 
             KeyGenerator kgen = KeyGenerator.getInstance("AES");
             //  将密码作为种子生成128位密钥
-            kgen.init(128, new SecureRandom(password.getBytes()));
+            kgen.init(ToolConstants.AES_KEYSIZE, new SecureRandom(password.getBytes()));
             SecretKey secretKey = kgen.generateKey();
 
             //  返回基本编码格式的密钥，如果此密钥不支持编码，会返回null
@@ -48,10 +50,9 @@ public class AES_Encryption {
 
     /**
      * AES加密字符串
-     *
-     * @param content  需要被加密的字符串
-     * @param password 加密需要的密码
-     * @return 密文
+     * @param content   需要被加密的字符串
+     * @param password  加密需要的密码
+     * @return          密文
      */
     public static byte[] encrypt(String content, String password) {
 
@@ -77,7 +78,7 @@ public class AES_Encryption {
 
             //  将口令转化位密钥
             KeyGenerator kgen = KeyGenerator.getInstance("AES");
-            kgen.init(128, new SecureRandom(password.getBytes()));
+            kgen.init(ToolConstants.AES_KEYSIZE, new SecureRandom(password.getBytes()));
             SecretKey secretKey = kgen.generateKey();
             byte[] enCodeFormat = secretKey.getEncoded();
             SecretKeySpec key = new SecretKeySpec(enCodeFormat, "AES");

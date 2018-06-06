@@ -19,4 +19,10 @@ public class ToolConstants {
      */
     public final static String CONFIG_PROPERTY = CURRENT_DIR + File.separator + "config" + File.separator
             + "wongWaterMark.properties";
+
+    public final static int AES_KEYSIZE = 128;
+    public final static int RSA_KEYSIZE = 1024;
+
+    public final static String PUBLIC_KEY_FILE = "puk";
+    public final static String PRIVATE_KEY_FILE = "prk";
 }

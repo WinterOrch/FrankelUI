@@ -11,6 +11,8 @@ public class HashTest {
     public static void main(String[] args) {
         //System.out.println(HexConver.byte2HexStr(DigestUtils.sha("all work and no play makes jack a dull boy."),20));
 
+        int red = 243;
+        System.out.println( red + (( ~red ) & 0x01 ));
 
 
         //AES测试
