@@ -15,6 +15,7 @@ public class Wong {
 
     // 返回参数常量
     private static final int EMBED_SUCESS_OPTION = 20;
+    private static final int PICTURE_SIZE_ERR = 21;
     private static final int PROP_FAIL_OPTION = 24;
 
     /**
