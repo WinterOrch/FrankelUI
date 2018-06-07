@@ -1,54 +1,96 @@
 package UI.tools.image;
 
 import UI.MainWindow;
+import UI.tools.ToolConstants;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
-import static UI.tools.ToolConstants.CURRENT_DIR;
 
 public class Conver {
 
-    public static void binaryImage(BufferedImage image) {
+    public static final int BINARY_WHITE = -1;
+    public static final int BINARY_BLACK = -16777216;
+
+    public static BufferedImage compress( BufferedImage originImage ) {
+
+        int size = ToolConstants.WATERMARK_SIZE;
+        int width = originImage.getWidth();
+        int height = originImage.getHeight();
+
+        // Calculate Standard Dimension
+        if( width > height ) {
+            if( width > size ) {
+                height = height * size / width;
+                width = size;
+            }
+        } else {
+            if( height > size ) {
+                width = width * size / height;
+                height = size;
+            }
+        }
+
+        // Compressing
+        Image big = originImage.getScaledInstance(width, height,Image.SCALE_DEFAULT);
+        BufferedImage inputbig = new BufferedImage(width, height,BufferedImage.TYPE_INT_RGB);
+        inputbig.getGraphics().drawImage(big, 0, 0, width, height, null);
+
+        return inputbig;
+    }
+
+    /**
+     * 将图像转为二值图像
+     * created in 13:17 2018/6/6
+     */
+    public static BufferedImage binaryImage( BufferedImage image ) {
 
         int width = Objects.requireNonNull(image).getWidth();
         int height = image.getHeight();
 
-        BufferedImage grayImage = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_BINARY);
+        BufferedImage binaryImage = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_BINARY);
         for(int i= 0 ; i < width ; i++){
             for(int j = 0 ; j < height; j++){
                 int rgb = image.getRGB(i, j);
-                grayImage.setRGB(i, j, rgb);
+                binaryImage.setRGB(i, j, rgb);
             }
         }
 
-        File newFile = new File(CURRENT_DIR + File.separator + "src" + File.separator + "2722425974762424028.bmp");
-        try {
-            ImageIO.write(grayImage, "bmp", newFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        return binaryImage;
     }
 
-    public void grayImage() throws IOException{
-        BufferedImage image = ImageIO.read(MainWindow.class.getResource("/testPhoto/32.bmp"));
+    public BufferedImage grayImage(BufferedImage originImage ) {
 
-        int width = image.getWidth();
-        int height = image.getHeight();
+        int width = originImage.getWidth();
+        int height = originImage.getHeight();
 
         BufferedImage grayImage = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_GRAY);
         for(int i= 0 ; i < width ; i++){
             for(int j = 0 ; j < height; j++){
-                int rgb = image.getRGB(i, j);
+                int rgb = originImage.getRGB(i, j);
                 grayImage.setRGB(i, j, rgb);
             }
         }
 
-        File newFile = new File(System.getProperty("user.dir")+"/src/2722425974762424027.jpg");
-        ImageIO.write(grayImage, "jpg", newFile);
+        return grayImage;
+    }
+
+    public static int[][] binary2Matrix(BufferedImage binaryImage) {
+        int[][] matrix = new int[binaryImage.getHeight()][binaryImage.getWidth()];
+
+        int imageWidth = binaryImage.getWidth();
+        int imageHeight = binaryImage.getHeight();
+
+        for(int i = binaryImage.getMinX(); i < imageWidth; i++) {
+            for(int j = binaryImage.getMinY(); j < imageHeight; j++) {
+                matrix[j][i] = (~binaryImage.getRGB(i,j)) & 0x01;//TODO 修改
+            }
+        }
+        return matrix;
     }
 
     public static void main(String[] args) {
@@ -58,6 +100,23 @@ public class Conver {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        binaryImage(image);
+        BufferedImage binaryImage = binaryImage(compress(Objects.requireNonNull(image)));
+        int t[][] = binary2Matrix(binaryImage);
+        for(int i=0;i<binaryImage.getHeight();i++) {
+            for(int j=0;j<binaryImage.getWidth();j++) {
+                //System.out.print(t[i][j]+" ");
+                binaryImage.setRGB(j,i,BINARY_WHITE);
+            }
+            //System.out.println("\n");
+        }
+
+        File newFile = new File(UI.tools.ToolConstants.CURRENT_DIR +
+                File.separator + "src" + File.separator + "2722425974762424027.bmp");
+        try {
+            ImageIO.write((binaryImage), "bmp", newFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }
