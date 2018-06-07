@@ -10,20 +10,19 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
 /**
- * AES算法类
+ * AES algorithm
  * @author Frankel.Y
  * Created in 15:03 2018/6/2
  */
 public class AES_Encryption {
 
     /**
-     * AES加密byte[]
-     *
-     * @param content  需要被加密内容
-     * @param password 加密需要的密码
-     * @return 密文
+     * Use AES algorithm to encrypt byte array
+     * @param content  Content to be encrypted
+     * @param password Password to generate a key
+     * @return Cipher text
      */
-    private static byte[] encrypt(byte[] content, String password) {
+    public static byte[] encrypt(byte[] content, String password) {
         try {
 
             KeyGenerator kgen = KeyGenerator.getInstance("AES");
@@ -68,10 +67,10 @@ public class AES_Encryption {
     }
 
     /**
-     * AES解密
-     * @param content       密文
-     * @param password      密码
-     * @return              明文
+     * AES decrypt
+     * @param content       Cipher text
+     * @param password      Password to generate a key
+     * @return              Clear text
      */
     public static byte[] decrypt(byte[] content, String password) {
         try {

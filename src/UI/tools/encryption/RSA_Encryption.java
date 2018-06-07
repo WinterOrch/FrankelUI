@@ -24,7 +24,7 @@ public class RSA_Encryption {
      * @param password      口令
      * created in 2:36 2018/6/5
      */
-    private static byte[] encrypt( byte[] content, String password ) {
+    public static byte[] encrypt( byte[] content, String password ) {
         //为RSA创建KeyPairGenerator对象并利用随机数初始化
         KeyPairGenerator keyPairGenerator = null;
         try {
