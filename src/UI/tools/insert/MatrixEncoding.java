@@ -2,21 +2,27 @@ package UI.tools.insert;
 
 import java.awt.image.BufferedImage;
 
+/**
+ * Use matrix encoding algorithm to encode two bits information into RGB three channels.
+ * @author Frankel.Y
+ * Created in 21:02 2018/6/7
+ */
 public class MatrixEncoding {
 
     public BufferedImage embed( BufferedImage originImage, int[][] lowByte, int[][] highByte) {
-        // 初始化，克隆原图像
+
         int imageWidth = originImage.getWidth();
         int imageHeight = originImage.getHeight();
         int red, green, blue;
         int temp1, temp2;
+        int lowB, highB;
+
+        //Copy the originImage
         BufferedImage outputImage = new BufferedImage(imageWidth,imageHeight,BufferedImage.TYPE_INT_RGB);
         outputImage.setData(originImage.getData());
 
-
         for(int i = outputImage.getMinX(); i < imageWidth; i++)   {
             for(int j = outputImage.getMinY(); j < imageHeight; j++)    {
-
 
                 Object data = originImage.getRaster().getDataElements(i, j, null);
 
@@ -27,26 +33,27 @@ public class MatrixEncoding {
                 temp1 = (( red & 0x01 ) + ( blue & 0x01 )) & 0x01;
                 temp2 = (( green & 0x01 ) + ( blue & 0x01 )) & 0x01;
 
-                //矩阵编码
-                if(( temp1 == lowByte[i][j]) && ( temp2 == highByte[i][j] )) {
+                lowB = lowByte[j][i];
+                highB = highByte[j][i];
+
+
+                //Matrix Encode
+                if(( temp1 == lowB) && ( temp2 == highByte[j][i] )) {
                     continue;
-                }
-                else if(( temp1 != lowByte[i][j]) && ( temp2 == highByte[i][j] )) {
-                    if( lowByte[i][j] == 1 || lowByte[i][j] == 0 ) {
+                } else if(( temp1 != lowB) && ( temp2 == highByte[j][i] )) {
+                    if( lowB == 1 || lowB == 0 ) {
                         red = red + (( ~red ) & 0x01);
                     } else {
                         return null;
                     }
-                }
-                else if(( temp1 == lowByte[i][j]) && ( temp2 != highByte[i][j] )) {
-                    if( lowByte[i][j] == 1 || lowByte[i][j] == 0 ) {
+                } else if(( temp1 == lowB) && (temp2 != highB)) {
+                    if( lowB == 1 || lowB == 0 ) {
                         green = green + (( ~green ) & 0x01);
                     } else {
                         return null;
                     }
-                }
-                else if(( temp1 != lowByte[i][j]) && ( temp2 != highByte[i][j] )) {
-                    if( lowByte[i][j] == 1 || lowByte[i][j] == 0 ) {
+                } else if(( temp1 != lowB) && ( temp2 != highB )) {
+                    if( lowB == 1 || lowB == 0 ) {
                         blue = blue + (( ~blue ) & 0x01);
                     } else {
                         return null;
