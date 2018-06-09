@@ -63,22 +63,6 @@ public class Conver {
         return binaryImage;
     }
 
-    public BufferedImage grayImage(BufferedImage originImage ) {
-
-        int width = originImage.getWidth();
-        int height = originImage.getHeight();
-
-        BufferedImage grayImage = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_GRAY);
-        for(int i= 0 ; i < width ; i++){
-            for(int j = 0 ; j < height; j++){
-                int rgb = originImage.getRGB(i, j);
-                grayImage.setRGB(i, j, rgb);
-            }
-        }
-
-        return grayImage;
-    }
-
     public static int[][] binary2Matrix(BufferedImage binaryImage) {
         int[][] matrix = new int[binaryImage.getHeight()][binaryImage.getWidth()];
 
@@ -101,7 +85,6 @@ public class Conver {
             e.printStackTrace();
         }
         BufferedImage binaryImage = binaryImage(compress(Objects.requireNonNull(image)));
-        int t[][] = binary2Matrix(binaryImage);
         for(int i=0;i<binaryImage.getHeight();i++) {
             for(int j=0;j<binaryImage.getWidth();j++) {
                 //System.out.print(t[i][j]+" ");

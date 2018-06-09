@@ -5,6 +5,7 @@ import UI.MainWindow;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.net.URL;
 
 /**
  * Description 与UI构建相关的常量定义
@@ -62,6 +63,7 @@ public class UIConstants {
     public final static Color LIST_BACK_COLOR = new Color(62, 62, 62);
     public final static Color ROLL_OVER_COLOR = new Color(97, 176, 239);
     public final static int NAVI_BAR_WIDTH = 48;
+    public final static Color DISABLED_BUTTON_COLOR = new Color(165, 165,165);
 
     /**
      * 字体
@@ -71,7 +73,7 @@ public class UIConstants {
     // 普通字体
     public final static Font FONT_NORMAL = new Font(PropertiesLocale.getProperty("UI.FONT.FAMILY"), Font.PLAIN, 13);
     //按钮字体
-    public final static Font FONT_BUTTON = new Font(PropertiesLocale.getProperty("UI.FONT.FAMILY"), Font.PLAIN, 13);
+    public final static Font FONT_BUTTON = new Font(PropertiesLocale.getProperty("UI.FONT.FAMILY"), Font.BOLD, 13);
 
     /**
      * 工具栏图标
@@ -91,6 +93,8 @@ public class UIConstants {
     public final static ImageIcon ICON_SIGNITURE = new ImageIcon(MainWindow.class.getResource("/icon/signiture-normal.png"));
     public final static ImageIcon ICON_SIGNITURE_READY = new ImageIcon(MainWindow.class.getResource("/icon/signiture-ready.png"));
     public final static ImageIcon ICON_SIGNITURE_PRESSED = new ImageIcon(MainWindow.class.getResource("/icon/signiture-pressed.png"));
+
+    public final static URL PLACE_HOLDER = MainWindow.class.getResource("/icon/placeholder.png");
     /**
      * 表格线条背景色
      */
@@ -107,6 +111,7 @@ public class UIConstants {
     // Item text field 大小
     public final static Dimension TEXT_FIELD_SIZE_ITEM = new Dimension(400, 24);
     public final static Dimension REVERSED_TEXT_FIELD_SIZE_ITEM = new Dimension(320,24);
+    public final static Dimension PROGRESS_BAR_SIZE = new Dimension(700,5);
     // radio 大小
     public final static Dimension RADIO_SIZE = new Dimension(1300, 60);
     // 高级选项面板Item 大小

@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
  */
 public class MatrixEncoding {
 
-    public BufferedImage embed( BufferedImage originImage, int[][] lowByte, int[][] highByte) {
+    public static BufferedImage embed(BufferedImage originImage, int[][] lowByte, int[][] highByte) {
 
         int imageWidth = originImage.getWidth();
         int imageHeight = originImage.getHeight();

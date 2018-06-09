@@ -17,7 +17,7 @@ public class MainWindow {
     public static MessagePanel messagePanel;
     public static SettingPanel settingPanel;
     public static PicturePanel picturePanel;
-    public static SigniturePanel signiturePanel;
+    public static SignaturePanel signaturePanel;
 
     /**
      * 构造方法
@@ -58,7 +58,7 @@ public class MainWindow {
         messagePanel = new MessagePanel();
         picturePanel = new PicturePanel();
         settingPanel = new SettingPanel();
-        signiturePanel = new SigniturePanel();
+        signaturePanel = new SignaturePanel();
 
         mainPanel.add(naviBar, BorderLayout.WEST);
 
@@ -120,7 +120,7 @@ public class MainWindow {
         settingPanel.refreshLocale();
         messagePanel.refreshLocale();
         picturePanel.refreshLocale();
-        signiturePanel.refreshLocale();
+        signaturePanel.refreshLocale();
         //TODO
 
     }

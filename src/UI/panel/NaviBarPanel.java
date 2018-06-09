@@ -127,7 +127,7 @@ public class NaviBarPanel extends JPanel{
 
             MainWindow.centerPanel.removeAll();
             //SettingPanel.getContent();
-            MainWindow.centerPanel.add(MainWindow.signiturePanel, BorderLayout.CENTER);
+            MainWindow.centerPanel.add(MainWindow.signaturePanel, BorderLayout.CENTER);
             MainWindow.centerPanel.updateUI();
         });
     }

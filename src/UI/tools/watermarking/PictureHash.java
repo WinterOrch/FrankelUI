@@ -28,9 +28,9 @@ public class PictureHash {
 
                 Object data = originPicture.getRaster().getDataElements(i, j, null);
 
-                content[index] = (byte)(originPicture.getColorModel().getRed(data) & 0xFF);
-                content[index + 1] = (byte)(originPicture.getColorModel().getGreen(data) & 0xFF);
-                content[index + 2] = (byte)(originPicture.getColorModel().getBlue(data) & 0xFF);
+                content[index] = (byte)(originPicture.getColorModel().getRed(data) & 0xFE);
+                content[index + 1] = (byte)(originPicture.getColorModel().getGreen(data) & 0xFE);
+                content[index + 2] = (byte)(originPicture.getColorModel().getBlue(data) & 0xFE);
             }
         }
 
