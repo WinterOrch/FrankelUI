@@ -10,7 +10,7 @@ import java.awt.event.WindowListener;
 
 public class MainWindow {
 
-    private JFrame frame;
+    public static JFrame frame;
 
     public static JPanel mainPanel;
     public static JPanel centerPanel;

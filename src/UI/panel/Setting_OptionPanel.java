@@ -82,22 +82,19 @@ public class Setting_OptionPanel extends JPanel {
      * created in 22:52 2018/4/30
      */
     private void addListener(){
-        languageCombox.addItemListener( new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                //语言变动
-                if( e.getStateChange() == ItemEvent.SELECTED ){
-                    if(e.getSource() == languageCombox){
-                        if((languageCombox.getSelectedIndex()==0)&&(PropertiesLocale.locale!=1)){
-                            PropertiesLocale.changeLanguage("CN");
-                            PropertiesLocale.initialize();
-                        }
-                        else if((languageCombox.getSelectedIndex()==1)&&(PropertiesLocale.locale!=2)){
-                            PropertiesLocale.changeLanguage("EN");
-                            PropertiesLocale.initialize();
-                        }
-                        MainWindow.freshLocale();
+        languageCombox.addItemListener(e -> {
+            //语言变动
+            if( e.getStateChange() == ItemEvent.SELECTED ){
+                if(e.getSource() == languageCombox){
+                    if((languageCombox.getSelectedIndex()==0)&&(PropertiesLocale.locale!=1)){
+                        PropertiesLocale.changeLanguage("CN");
+                        PropertiesLocale.initialize();
                     }
+                    else if((languageCombox.getSelectedIndex()==1)&&(PropertiesLocale.locale!=2)){
+                        PropertiesLocale.changeLanguage("EN");
+                        PropertiesLocale.initialize();
+                    }
+                    MainWindow.freshLocale();
                 }
             }
         });

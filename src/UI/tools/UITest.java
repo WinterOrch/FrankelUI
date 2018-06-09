@@ -21,9 +21,7 @@ public class UITest {
         frame.setLayout(new FlowLayout());
 
         final ProgressBar progressBar = new ProgressBar(0,100);
-
         progressBar.setOrientation(JProgressBar.HORIZONTAL);
-
         progressBar.setPreferredSize(UIConstants.TEXT_FIELD_SIZE_ITEM);
 
         frame.add(progressBar);

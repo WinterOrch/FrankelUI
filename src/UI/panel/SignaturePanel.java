@@ -9,7 +9,6 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-@SuppressWarnings("Duplicates")
 public class SignaturePanel extends FunctionPanel {
     private static JPanel listPanelBmpEncode;
     private static JPanel listPanelBmpDecode;
@@ -154,6 +153,5 @@ public class SignaturePanel extends FunctionPanel {
                 }
             }
         });
-        //TODO
     }
 }

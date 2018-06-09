@@ -65,4 +65,45 @@ public class MatrixEncoding {
         }
         return outputImage;
     }
+
+
+    public static int[][] getLowBit(BufferedImage watermarkedImage){
+        int imageWidth = watermarkedImage.getWidth();
+        int imageHeight = watermarkedImage.getHeight();
+        int [][]lowBit = new int[imageHeight][imageWidth];
+        int red,green,blue;
+        int temp1, temp2;
+        for(int i = watermarkedImage.getMinX(); i < imageWidth; i++) {
+            for (int j = watermarkedImage.getMinY(); j < imageHeight; j++) {
+                Object data = watermarkedImage.getRaster().getDataElements(i, j, null);
+                red = watermarkedImage.getColorModel().getRed(data);
+                green = watermarkedImage.getColorModel().getGreen(data);
+                blue = watermarkedImage.getColorModel().getBlue(data);
+                temp1 = blue & green;
+                lowBit[j][i] =temp1;
+            }
+        }
+        return lowBit;
+    }
+
+
+    public static int[][] getHighBit(BufferedImage watermarkedImage){
+        int imageWidth = watermarkedImage.getWidth();
+        int imageHeight = watermarkedImage.getHeight();
+        int [][]highBit = new int[imageHeight][imageWidth];
+        int red,green,blue;
+        int temp1, temp2;
+        for(int i = watermarkedImage.getMinX(); i < imageWidth; i++) {
+            for (int j = watermarkedImage.getMinY(); j < imageHeight; j++) {
+                Object data = watermarkedImage.getRaster().getDataElements(i, j, null);
+                red = watermarkedImage.getColorModel().getRed(data);
+                green = watermarkedImage.getColorModel().getGreen(data);
+                blue = watermarkedImage.getColorModel().getBlue(data);
+                temp2 = red & blue;
+                highBit[j][i] =temp2;
+            }
+        }
+        return highBit;
+    }
+
 }

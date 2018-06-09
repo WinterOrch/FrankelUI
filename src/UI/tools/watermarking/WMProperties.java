@@ -1,12 +1,10 @@
 package UI.tools.watermarking;
 
 
+import UI.constant.UIConstants;
 import UI.tools.ToolConstants;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Properties;
 
 public class WMProperties {
@@ -29,4 +27,22 @@ public class WMProperties {
         }
     }
 
+    /**
+     * Change Config of Algorithm selected
+     * created in 18:08 2018/6/9
+     */
+    public static void changeAlgorithm(String type, String name){
+        Properties props = new Properties();
+        try {
+            InputStream in = new BufferedInputStream(new FileInputStream(ToolConstants.CONFIG_PROPERTY));
+            props.load(in);
+            OutputStream fos = new FileOutputStream(ToolConstants.CONFIG_PROPERTY);
+            props.setProperty(type, name);
+            props.store(fos, "Update value");
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error in updating language config files");
+        }
+    }
 }

@@ -1,5 +1,6 @@
 package UI.tools.watermarking;
 
+import UI.panel.PictureDemoPanel;
 import UI.tools.image.Conver;
 import UI.tools.image.ImageWall;
 import UI.tools.insert.MatrixEncoding;
@@ -109,4 +110,63 @@ public class Wong {
         return status;
     }
 
-}
+    private int decodePictureFirst(BufferedImage carrierImage, BufferedImage watermarkImage, String password, int hashType,
+                       int encryptionType, File savePath, File certificate) {
+        int status;
+        /**生成图片的HASH
+         */
+        byte[] pictureSummary = PictureHash.operate(carrierImage);
+        new ImageWall(carrierImage, MatrixEncoding.getLowBit(carrierImage));
+        if (encryptionType == ENCRYP_TYPE_AES) {
+            ImageWall.decrypt(password, ENCRYP_TYPE_AES, null);
+            status = ImageWall.insertHash(pictureSummary);
+        }
+        if (encryptionType == ENCRYP_TYPE_RSA) {
+            ImageWall.decrypt(null, ENCRYP_TYPE_RSA, certificate);
+            status = ImageWall.insertHash(pictureSummary);
+        }
+        BufferedImage output = Conver.matrix2BufferImage(ImageWall.matrixOutput(),carrierImage);
+        try {
+            ImageIO.write((Objects.requireNonNull(output)), "bmp", savePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+            status = FILE_OUTPUT_ERROR;
+            return status;
+        }
+        status = EMBED_SUCESS_OPTION;
+        return status;
+    }
+
+
+    private int decodePictureSecond(BufferedImage carrierImage, BufferedImage watermarkImage, String password, int hashType,
+                                   int encryptionType, File savePath, File certificate) {
+        int status;
+        /**生成图片的HASH
+         */
+        byte[] pictureSummary = PictureHash.operate(carrierImage);
+        new ImageWall(carrierImage, MatrixEncoding.getHighBit(carrierImage));
+        if (encryptionType == ENCRYP_TYPE_AES) {
+            ImageWall.decrypt(password, ENCRYP_TYPE_AES, null);
+            status = ImageWall.insertHash(pictureSummary);
+        }
+        if (encryptionType == ENCRYP_TYPE_RSA) {
+            ImageWall.decrypt(null, ENCRYP_TYPE_RSA, certificate);
+            status = ImageWall.insertHash(pictureSummary);
+        }
+        BufferedImage output = Conver.matrix2BufferImage(ImageWall.matrixOutput(),carrierImage);
+        try {
+            ImageIO.write((Objects.requireNonNull(output)), "bmp", savePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+            status = FILE_OUTPUT_ERROR;
+            return status;
+        }
+        status = EMBED_SUCESS_OPTION;
+        return status;
+    }
+
+    }
+
+
+
+

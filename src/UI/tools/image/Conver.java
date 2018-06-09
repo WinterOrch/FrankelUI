@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.Buffer;
 import java.util.Objects;
 
 
@@ -47,6 +48,12 @@ public class Conver {
      * 将图像转为二值图像
      * created in 13:17 2018/6/6
      */
+
+    /**
+     * 可能存在i,j的问题
+     * @param image
+     * @return
+     */
     public static BufferedImage binaryImage( BufferedImage image ) {
 
         int width = Objects.requireNonNull(image).getWidth();
@@ -62,6 +69,24 @@ public class Conver {
 
         return binaryImage;
     }
+
+    public static BufferedImage matrix2BufferImage(int[][]  matrix, BufferedImage oringinalPicture){
+        int width;
+        int height;
+        width = oringinalPicture.getWidth();
+        height = oringinalPicture.getHeight();
+        BufferedImage  outputimage= new BufferedImage(width, height,BufferedImage.TYPE_INT_RGB);
+        for(int i = 0; i < height ; i++){
+            for (int j = 0; j < width;j++){
+                if (matrix[i][j] == 0)
+                    outputimage.setRGB(i,j,BINARY_WHITE);
+                else
+                    outputimage.setRGB(i,j,BINARY_BLACK);
+            }
+        }
+        return outputimage;
+    }
+
 
     public static int[][] binary2Matrix(BufferedImage binaryImage) {
         int[][] matrix = new int[binaryImage.getHeight()][binaryImage.getWidth()];

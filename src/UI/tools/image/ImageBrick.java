@@ -3,6 +3,8 @@ package UI.tools.image;
 import UI.tools.encryption.AES_Encryption;
 import UI.tools.encryption.RSA_Encryption;
 
+import javax.imageio.ImageIO;
+import java.io.File;
 import java.util.Objects;
 
 /**
@@ -25,6 +27,7 @@ public class ImageBrick {
         }
     }
 
+
     void encrypt(String password, int encrypType) {
         byte[] secret = new byte[8];
 
@@ -36,4 +39,14 @@ public class ImageBrick {
 
         clay = Objects.requireNonNull(secret).clone();
     }
+    void decrypt(String password, int decrypType, File file){
+        byte[] truth = new byte[8];
+        if (decrypType == ImageWall.ENCRYP_TYPE_AES) {
+            truth = AES_Encryption.decrypt(clay, password);
+        }else if (decrypType == ImageWall.ENCRYP_TYPE_RSA){
+            truth = RSA_Encryption.decrypt(clay,file);
+        }
+    }
+
+
 }

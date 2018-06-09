@@ -1,5 +1,6 @@
 package UI.tools.image;
 import java.awt.image.BufferedImage;
+import java.io.File;
 
 /**
  * ImageWall class is used to embed a single watermark binary image into the whole picture.
@@ -100,6 +101,16 @@ public class ImageWall {
         }
     }
 
+    public static void decrypt(String password, int decryptType, File file){
+        for(int i = 0; i < height; i++){
+            for(int j = 0; j < width;j++){
+                    wall[i][j].decrypt(password,decryptType,file);
+            }
+        }
+    }
+
+
+
     /**
      * Convert Matrix Information into two-dimensional integar array
      * created in 20:44 2018/6/7
@@ -118,4 +129,15 @@ public class ImageWall {
         }
         return outputMatrix;
     }
+
+    public static BufferedImage wall2BufferImage(){
+
+        BufferedImage outputImage = new BufferedImage(height, width,BufferedImage.TYPE_INT_RGB);
+
+
+
+        return outputImage;
+    }
+
+
 }
