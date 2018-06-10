@@ -42,24 +42,24 @@ public class MatrixEncoding {
                     continue;
                 } else if(( temp1 != lowB) && ( temp2 == highByte[j][i] )) {
                     if( lowB == 1 || lowB == 0 ) {
-                        red = red + (( ~red ) & 0x01);
+                        red = (red & 0xFFFFFFFE) + (( ~red ) & 0x01);
                     } else {
                         return null;
                     }
                 } else if(( temp1 == lowB) && (temp2 != highB)) {
                     if( lowB == 1 || lowB == 0 ) {
-                        green = green + (( ~green ) & 0x01);
+                        green = (green & 0xFFFFFFFE) + (( ~green ) & 0x01);
                     } else {
                         return null;
                     }
                 } else if(( temp1 != lowB) && ( temp2 != highB )) {
                     if( lowB == 1 || lowB == 0 ) {
-                        blue = blue + (( ~blue ) & 0x01);
+                        blue = (blue & 0xFFFFFFFE) + (( ~blue ) & 0x01);
                     } else {
                         return null;
                     }
                 }
-                int argb = ( ( red & 0xFF ) << 16) + ( ( green & 0xFF ) << 8) +( ( blue & 0xFF ) << 16);
+                int argb = (outputImage.getRGB(i,j) & 0xFF000000) + (( red & 0xFF ) << 16) + (( green & 0xFF) << 8) + (blue & 0xFF);
                 outputImage.setRGB(i, j, argb);
             }
         }
@@ -75,11 +75,18 @@ public class MatrixEncoding {
         int temp1, temp2;
         for(int i = watermarkedImage.getMinX(); i < imageWidth; i++) {
             for (int j = watermarkedImage.getMinY(); j < imageHeight; j++) {
-                Object data = watermarkedImage.getRaster().getDataElements(i, j, null);
-                red = watermarkedImage.getColorModel().getRed(data);
+                // Object data = watermarkedImage.getRaster().getDataElements(i, j, null);
+                //watermarkedImage.getRGB(i,j);
+                red = watermarkedImage.getRGB(i,j)>>16 & 0xff;
+                green = watermarkedImage.getRGB(i,j)>>8 & 0xff;
+                blue = watermarkedImage.getRGB(i,j)&0xff;
+
+               /* red = watermarkedImage.getColorModel().getRed(data);
                 green = watermarkedImage.getColorModel().getGreen(data);
                 blue = watermarkedImage.getColorModel().getBlue(data);
-                temp1 = blue & green;
+                watermarkedImage.getRGB(i,j);
+                */
+                temp1 = (red & 0x01) ^ (blue & 0x01);
                 lowBit[j][i] =temp1;
             }
         }
@@ -99,7 +106,7 @@ public class MatrixEncoding {
                 red = watermarkedImage.getColorModel().getRed(data);
                 green = watermarkedImage.getColorModel().getGreen(data);
                 blue = watermarkedImage.getColorModel().getBlue(data);
-                temp2 = red & blue;
+                temp2 = red ^ blue;
                 highBit[j][i] =temp2;
             }
         }

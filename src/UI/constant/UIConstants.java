@@ -26,7 +26,7 @@ public class UIConstants {
      */
     public final static int MAIN_WINDOW_X = 240;
     public final static int MAIN_WINDOW_Y = 100;
-    public final static int MAIN_WINDOW_WIDTH = 900;
+    public final static int MAIN_WINDOW_WIDTH = 1025;
     public final static int MAIN_WINDOW_HEIGHT = 636;
 
     /**
@@ -109,9 +109,10 @@ public class UIConstants {
     // Item Label 大小
     public final static Dimension LABLE_SIZE_ITEM = new Dimension(93, 28);
     // Item text field 大小
-    public final static Dimension TEXT_FIELD_SIZE_ITEM = new Dimension(400, 24);
-    public final static Dimension REVERSED_TEXT_FIELD_SIZE_ITEM = new Dimension(320,24);
-    public final static Dimension PROGRESS_BAR_SIZE = new Dimension(700,5);
+    public final static Dimension TEXT_FIELD_SIZE_ITEM = new Dimension(525, 24);
+    public final static Dimension REVERSED_TEXT_FIELD_SIZE_ITEM = new Dimension(445,24);
+    public final static Dimension PROGRESS_BAR_SIZE = new Dimension(825,5);
+    public final static Dimension PICTURE_SIZE = new Dimension(300,200);
     // radio 大小
     public final static Dimension RADIO_SIZE = new Dimension(1300, 60);
     // 高级选项面板Item 大小

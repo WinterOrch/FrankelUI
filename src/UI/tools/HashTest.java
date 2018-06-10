@@ -19,7 +19,7 @@ public class HashTest {
         System.out.println( ((( red & 0x01 ) + ( blue & 0x01 )) & 0x01)!=green );
         */
 
-        /*
+
         //AES测试
         String content = "all work and no play makes jack a dull boy.";
         String password = "Holly Shit";
@@ -34,6 +34,6 @@ public class HashTest {
         byte[] decrypt = AES_Encryption.decrypt(encrypt, password);
         System.out.println("解密后的内容：" + new String(Objects.requireNonNull(decrypt)));
         System.out.println(HexConver.byte2HexStr(AES_Encryption.encrypt("all work and no play makes jack a dull boy.","Holly Shit"),20));
-        */
+
     }
 }

@@ -1,6 +1,11 @@
 package UI.tools.image;
+import UI.MainWindow;
+
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+import java.util.Objects;
 
 /**
  * ImageWall class is used to embed a single watermark binary image into the whole picture.
@@ -19,6 +24,7 @@ public class ImageWall {
 
     public static final int ENCRYP_TYPE_AES = 0;
     public static final int ENCRYP_TYPE_RSA = 1;
+    public static final int ENCRYP_TYPE_DES = 2;
 
     /**
      * @param originPicture     Original Picture
@@ -33,7 +39,7 @@ public class ImageWall {
      * Initialize by cutting the whole picture into 8*8 parts
      * created in 20:38 2018/6/7
      */
-    public static void initialize( int[][] buffer ) {
+    public static void initialize(int[][] buffer) {
         int m, n;
 
         m = buffer[0].length / 8;
@@ -41,13 +47,18 @@ public class ImageWall {
         width = m;
         height = n;
         wall = new ImageBrick[n][m];
+
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 wall[i][j] = new ImageBrick();
-                for (int p = i * 8; p < (i + 1) * 8; i++) {
-                    for (int q = j * 8; q < (j + 1) * 8; j++) {
-                        wall[i][j].clay[p % 8] = (byte)(wall[i][j].clay[p % 8] |
-                                ((buffer[p][q] & 0x01) << (q%8)));
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                for (int p = i * 8; p < (i + 1) * 8; p++) {
+                    for (int q = j * 8; q < (j + 1) * 8; q++) {
+                        wall[i][j].clay[p % 8] = (byte)(wall[i][j].clay[p % 8] | ((buffer[p][q] & 0x01) << (q % 8)));
                     }
                 }
             }
@@ -60,7 +71,7 @@ public class ImageWall {
      * @param x     Binary Watermark
      * created in 20:40 2018/6/7
      */
-    private static int[][] fillPiece(BufferedImage p, int[][] x) {
+    public static int[][] fillPiece(BufferedImage p, int[][] x) {
         int m,n;
         m = p.getHeight();
         n = p.getWidth();
@@ -69,7 +80,7 @@ public class ImageWall {
         for(int i = 0; i < m+8-m%8;i++)
             for(int j = 0; j < n+8-n%8; j++) {
                 if(i <= m && j <= n)
-                    newP[i][j] = x[i%x[0].length][j%x.length];
+                    newP[i][j] = x[i%x.length][j%x[0].length];
                 else
                     newP[i][j] = 0;
             }
@@ -119,8 +130,8 @@ public class ImageWall {
         int[][] outputMatrix = new int[height*8][width*8];
         for(int i = 0; i < height; i++) {
             for(int j = 0; j < width; j++) {
-                for (int p = i * 8; p < (i + 1) * 8; i++) {
-                    for (int q = j * 8; q < (j + 1) * 8; j++) {
+                for (int p = i * 8; p < (i + 1) * 8; p++) {
+                    for (int q = j * 8; q < (j + 1) * 8; q++) {
                         outputMatrix[p][q] = ((wall[i][j].clay[p % 8] &
                                 (0x01 << (q % 8))) >> (q % 8)) & 0x01;
                     }

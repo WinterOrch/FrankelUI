@@ -101,7 +101,7 @@ public class RSA_Encryption {
      * @param keyType       选择写入公钥还是私钥
      * created in 2:38 2018/6/5
      */
-    public void saveFile( String password, int keyType ) {
+    public static void saveFile( String password, int keyType ) {
         //弹出文件选择框
         JFileChooser chooser = new JFileChooser();
         FileNameExtensionFilter filter = null;
@@ -111,12 +111,12 @@ public class RSA_Encryption {
             extension = ToolConstants.PUBLIC_KEY_FILE;
             //公钥后缀名过滤器
             filter = new FileNameExtensionFilter(
-                    "公钥文件(*." + extension + ")", extension);
+                    "公钥文件(*." + extension + ")", extension);//TODO 国际化
         } else if ( keyType == TYPE_PRIVATE_KEY ) {
             extension = ToolConstants.PRIVATE_KEY_FILE;
             //私钥后缀名过滤器
             filter = new FileNameExtensionFilter(
-                    "私钥文件(*." + extension + ")", extension);
+                    "私钥文件(*." + extension + ")", extension);//TODO 国际化
         }
 
         chooser.setFileFilter(filter);
@@ -136,7 +136,7 @@ public class RSA_Encryption {
         }
     }
 
-    private void generateKeyPair( String password, File key, int keyType ) {
+    private static void generateKeyPair( String password, File key, int keyType ) {
         //为RSA创建KeyPairGenerator对象并利用随机数初始化
         KeyPairGenerator keyPairGenerator = null;
         try {

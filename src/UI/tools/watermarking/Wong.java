@@ -1,13 +1,11 @@
 package UI.tools.watermarking;
 
-import UI.panel.PictureDemoPanel;
 import UI.tools.image.Conver;
 import UI.tools.image.ImageWall;
 import UI.tools.insert.MatrixEncoding;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -16,12 +14,13 @@ import java.util.Objects;
 public class Wong {
 
     // 哈希方法常量
-    private static final int HASH_TYPE_SHA1 = 1;
-    private static final int HASH_TYPE_MD5 = 2;
+    public static final int HASH_TYPE_SHA1 = 1;
+    public static final int HASH_TYPE_MD5 = 2;
 
     // 加密方法常量
-    private static final int ENCRYP_TYPE_AES = 3;
-    private static final int ENCRYP_TYPE_RSA = 4;
+    public static final int ENCRYP_TYPE_AES = 3;
+    public static final int ENCRYP_TYPE_RSA = 4;
+    public static final int ENCRYP_TYPE_DES = 5;
 
     // 返回参数常量
     private static final int EMBED_SUCESS_OPTION = 20;
@@ -110,13 +109,30 @@ public class Wong {
         return status;
     }
 
-    private int decodePictureFirst(BufferedImage carrierImage, BufferedImage watermarkImage, String password, int hashType,
-                       int encryptionType, File savePath, File certificate) {
-        int status;
+    public static int decodePictureFirst(BufferedImage carrierImage, String password, int hashType,
+                                         int encryptionType, File savePath, File certificate) {
+        int status=0;
         /**生成图片的HASH
          */
         byte[] pictureSummary = PictureHash.operate(carrierImage);
+        BufferedImage m = Conver.matrix2BufferImage(MatrixEncoding.getLowBit(carrierImage),carrierImage);
+        try {
+            ImageIO.write(m, "bmp", new File("E:/new.bmp"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         new ImageWall(carrierImage, MatrixEncoding.getLowBit(carrierImage));
+
+        ImageWall.decrypt("334", 0, null);
+        BufferedImage output = Conver.matrix2BufferImage(ImageWall.matrixOutput(),carrierImage);
+        try {
+            ImageIO.write(output, "bmp", new File("F:/new.bmp"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return status;
+        /*
         if (encryptionType == ENCRYP_TYPE_AES) {
             ImageWall.decrypt(password, ENCRYP_TYPE_AES, null);
             status = ImageWall.insertHash(pictureSummary);
@@ -135,16 +151,29 @@ public class Wong {
         }
         status = EMBED_SUCESS_OPTION;
         return status;
+       */
     }
 
 
-    private int decodePictureSecond(BufferedImage carrierImage, BufferedImage watermarkImage, String password, int hashType,
+/*    private int decodePictureSecond(BufferedImage carrierImage, BufferedImage watermarkImage, String password, int hashType,
                                    int encryptionType, File savePath, File certificate) {
-        int status;
+        int status = 0;
         /**生成图片的HASH
-         */
+
         byte[] pictureSummary = PictureHash.operate(carrierImage);
         new ImageWall(carrierImage, MatrixEncoding.getHighBit(carrierImage));
+        ImageWall.decrypt(password, ENCRYP_TYPE_AES, null);
+        BufferedImage output = Conver.matrix2BufferImage(ImageWall.matrixOutput(),carrierImage);
+
+        try {
+            ImageIO.write((Objects.requireNonNull(output)), "bmp", savePath);
+            return status;
+        } catch (IOException e) {
+            e.printStackTrace();
+            status = FILE_OUTPUT_ERROR;
+            return status;
+        }
+
         if (encryptionType == ENCRYP_TYPE_AES) {
             ImageWall.decrypt(password, ENCRYP_TYPE_AES, null);
             status = ImageWall.insertHash(pictureSummary);
@@ -163,7 +192,8 @@ public class Wong {
         }
         status = EMBED_SUCESS_OPTION;
         return status;
-    }
+
+    }*/
 
     }
 

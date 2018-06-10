@@ -1,16 +1,10 @@
 package UI.panel;
 
-
-import UI.MainWindow;
-import UI.constant.PropertiesLocale;
 import UI.constant.UIConstants;
-import sun.applet.Main;
+import UI.tools.image.Conver;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.IOException;
 
@@ -45,20 +39,20 @@ public class PictureDemoPanel extends javax.swing.JPanel {
         }
 
         PictureDemoPanel(){
-
-
             try {
                 isEmpty = true;
-                imgWidth = 200;
+                imgWidth = 300;
                 imgHeight = 200;
                 image = ImageIO.read(UIConstants.PLACE_HOLDER);
-                image = image.getScaledInstance(200,200, Image.SCALE_DEFAULT);
+                image = image.getScaledInstance(300,200, Image.SCALE_DEFAULT);
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
 
-
-    }
+        public BufferedImage getOrigin() {
+            return Conver.toBufferedImage(imageOrigin);
+        }
 
         public void setImagePath(String imgPath) {
             isEmpty = false;
@@ -68,7 +62,7 @@ public class PictureDemoPanel extends javax.swing.JPanel {
                 // 该方法会将图像加载到内存，从而拿到图像的详细信息。
                 image = ImageIO.read(new FileInputStream(imgPath));
                 imageOrigin = ImageIO.read(new FileInputStream(imgPath));
-                image = image.getScaledInstance(200,200,Image.SCALE_DEFAULT);
+                image = image.getScaledInstance(300,200,Image.SCALE_DEFAULT);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -92,6 +86,23 @@ public class PictureDemoPanel extends javax.swing.JPanel {
                 imageDialog.setVisible(true);
             }else {
                 JOptionPane.showMessageDialog(owner,"Please select a picture first!");
+            }
+        }
+
+        public void showHist(Frame owner, String title) {
+            if(!isEmpty) {
+                JDialog imageDialog = new JDialog(owner, title);
+                Container contentPane = imageDialog.getContentPane();
+                JLabel picture = new JLabel();
+                Icon icon = new ImageIcon(Conver.getHist(this.getOrigin()));
+                picture.setIcon(icon);
+                picture.setBounds(10, 10, icon.getIconWidth(),icon.getIconHeight());
+
+                contentPane.add(picture);
+                imageDialog.setSize(icon.getIconWidth(),icon.getIconHeight());
+                imageDialog.setLocation(10,10);
+                imageDialog.setResizable(false);
+                imageDialog.setVisible(true);
             }
         }
 
