@@ -340,7 +340,6 @@ class Signature_BMPEncodePanel extends JPanel {
                     fileNamePicture = PictureSpecificFile.getName();
                     isPictureLoaded = true;
                     tip.setText(PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.PICTURE.SUCCESS"));
-                    picturePanel.showHist(MainWindow.frame,"Picture");
                 }
         });
 
@@ -466,10 +465,26 @@ class Signature_BMPEncodePanel extends JPanel {
                     tip.setText(PropertiesLocale.getProperty("UI,SIGNATURE.BMPENCODE.PROGRESS.HASHINSERT"));
                     progressBar.setValue(60);
 
+
+                    justTest = Conver.matrix2BufferImage(ImageWall.matrixOutput(),carrierImage);
+                    newFile = new File(UI.tools.ToolConstants.CURRENT_DIR +
+                            File.separator + "src" + File.separator + "异或后的矩阵.bmp");
+                    try {
+                        ImageIO.write((justTest), "bmp", newFile);
+                    } catch (IOException e2) {
+                        e2.printStackTrace();
+                    }
+
+
+
+
+
                     if(encrptionType == Wong.ENCRYP_TYPE_AES) {
                         ImageWall.encrypt(password, ImageWall.ENCRYP_TYPE_AES);
                     }else if(encrptionType == Wong.ENCRYP_TYPE_RSA) {
                         ImageWall.encrypt(password, ImageWall.ENCRYP_TYPE_RSA);
+                    }else if(encrptionType == Wong.ENCRYP_TYPE_DES) {
+                        ImageWall.encrypt(password, ImageWall.ENCRYP_TYPE_DES);
                     }
                     tip.setText(PropertiesLocale.getProperty("UI,SIGNATURE.BMPENCODE.PROGRESS.ENCRYINSERT"));
                     progressBar.setValue(72);

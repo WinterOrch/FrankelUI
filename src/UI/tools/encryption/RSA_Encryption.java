@@ -193,4 +193,39 @@ public class RSA_Encryption {
 
         return key;
     }
+
+
+
+    /**
+     * AES加密字符串
+     * @param content   需要被加密的字符串
+     * @param password  加密需要的密码
+     * @return          密文
+     */
+    public static byte[] encrypt(String content, String password) {
+
+        try {
+            byte[] byteContent = content.getBytes("utf-8");
+
+            return encrypt(byteContent,password);
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void main(String[] args) {
+        try {
+            byte[] c = "狗屎WO".getBytes("utf-8");
+            int l = c.length;
+            System.out.println(l);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        byte[] m = encrypt("狗屎WO","holly");
+        System.out.println(Objects.requireNonNull(m).length);
+    }
+
 }
