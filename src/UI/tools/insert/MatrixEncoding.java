@@ -93,7 +93,6 @@ public class MatrixEncoding {
         return lowBit;
     }
 
-
     public static int[][] getHighBit(BufferedImage watermarkedImage){
         int imageWidth = watermarkedImage.getWidth();
         int imageHeight = watermarkedImage.getHeight();
@@ -106,7 +105,7 @@ public class MatrixEncoding {
                 red = watermarkedImage.getColorModel().getRed(data);
                 green = watermarkedImage.getColorModel().getGreen(data);
                 blue = watermarkedImage.getColorModel().getBlue(data);
-                temp2 = red ^ blue;
+                temp2 = (green & 0x01) ^ (blue & 0x01);
                 highBit[j][i] =temp2;
             }
         }

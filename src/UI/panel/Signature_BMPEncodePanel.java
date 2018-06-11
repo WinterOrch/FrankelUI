@@ -41,12 +41,21 @@ class Signature_BMPEncodePanel extends JPanel {
     private JLabel inputWatermarkLabel = new JLabel();
     private JTextField inputWatermarkText = new JTextField();
     private JButton inputWatermarkButton = new JButton();
+
+    private JLabel inputWatermarksecondLabel = new JLabel();
+    private JTextField inputWatermarksecondText = new JTextField();
+    private JButton inputWatermarksecondButton = new JButton();
+
     private JLabel inputPictureLabel = new JLabel();
     private JTextField inputPictureText = new JTextField();
     private JButton inputPictureButton = new JButton();
     private JLabel inputPasswordLable = new JLabel();
     private JTextField inputPasswordText = new JTextField();
     private JButton inputPasswordButton = new JButton();
+
+    private JLabel inputPasswordsecondLable = new JLabel();
+    private JTextField inputPasswordsecondText = new JTextField();
+    private JButton inputPasswordsecondButton = new JButton();
     private JLabel tip;
 
     private ProgressBar progressBar;
@@ -66,6 +75,7 @@ class Signature_BMPEncodePanel extends JPanel {
 
     // Image Storage
     private static BufferedImage outputImage;
+    private static BufferedImage bufferedImageFirstWatermark;
     /**
      * 构造
      * created in 22:20 2018/4/30
@@ -122,6 +132,9 @@ class Signature_BMPEncodePanel extends JPanel {
         //初始化组件
         inputWatermarkLabel.setText(PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.WATERMARK"));
         inputWatermarkButton.setText(PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.SCAN"));
+        inputWatermarksecondLabel.setText(PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.WATERMARK"));
+        inputWatermarksecondButton.setText(PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.SCAN"));
+
         inputPictureLabel.setText(PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.PICTURE"));
         inputPictureButton.setText(PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.SCAN"));
         inputHashLable.setText(PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.HASH.LABLE"));
@@ -135,6 +148,9 @@ class Signature_BMPEncodePanel extends JPanel {
         inputEncryptCombox.addItem(PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.ENCRPT.THIRD"));
         inputPasswordLable.setText(PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.PASSWORD.LABLE"));
         inputPasswordButton.setText(PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.PASSWORD.BUTTON"));
+        inputPasswordsecondLable.setText(PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.PASSWORD.LABLE"));
+        inputPasswordsecondButton.setText(PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.PASSWORD.BUTTON"));
+
         progressBar = new ProgressBar(0,100);
         progressBar.setOrientation(JProgressBar.HORIZONTAL);
 
@@ -147,12 +163,15 @@ class Signature_BMPEncodePanel extends JPanel {
         if(Objects.requireNonNull(WMProperties.getProperty("ENCRYP.EMBED")).equals(PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.ENCRPT.FIRST"))) {
             inputEncryptCombox.setSelectedIndex(0);
             inputPasswordButton.setEnabled(false);
+            inputPasswordsecondButton.setEnabled(false);
         }else if(Objects.requireNonNull(WMProperties.getProperty("ENCRYP.EMBED")).equals(PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.ENCRPT.SECOND"))) {
             inputEncryptCombox.setSelectedIndex(1);
             inputPasswordButton.setEnabled(true);
+            inputPasswordsecondButton.setEnabled(true);
         }else if(Objects.requireNonNull(WMProperties.getProperty("ENCRYP.EMBED")).equals(PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.ENCRPT.THIRD"))) {
             inputEncryptCombox.setSelectedIndex(2);
             inputPasswordButton.setEnabled(false);
+            inputPasswordsecondButton.setEnabled(false);
         }
 
 
@@ -160,6 +179,11 @@ class Signature_BMPEncodePanel extends JPanel {
         inputWatermarkLabel.setPreferredSize(UIConstants.LABLE_SIZE_ITEM);
         inputWatermarkText.setPreferredSize(UIConstants.REVERSED_TEXT_FIELD_SIZE_ITEM);
         inputWatermarkButton.setPreferredSize(UIConstants.LABLE_SIZE_ITEM);
+
+        inputWatermarksecondLabel.setPreferredSize(UIConstants.LABLE_SIZE_ITEM);
+        inputWatermarksecondText.setPreferredSize(UIConstants.REVERSED_TEXT_FIELD_SIZE_ITEM);
+        inputWatermarksecondButton.setPreferredSize(UIConstants.LABLE_SIZE_ITEM);
+
         inputPictureLabel.setPreferredSize(UIConstants.LABLE_SIZE_ITEM);
 
 
@@ -169,32 +193,54 @@ class Signature_BMPEncodePanel extends JPanel {
         inputHashCombox.setPreferredSize(UIConstants.TEXT_FIELD_SIZE_ITEM);
         inputEncyptLable.setPreferredSize(UIConstants.LABLE_SIZE_ITEM);
         inputEncryptCombox.setPreferredSize(UIConstants.TEXT_FIELD_SIZE_ITEM);
+
         inputPasswordText.setPreferredSize(UIConstants.REVERSED_TEXT_FIELD_SIZE_ITEM);
         inputPasswordLable.setPreferredSize(UIConstants.LABLE_SIZE_ITEM);
         inputPasswordButton.setPreferredSize(UIConstants.LABLE_SIZE_ITEM);
+
+        inputPasswordsecondText.setPreferredSize(UIConstants.REVERSED_TEXT_FIELD_SIZE_ITEM);
+        inputPasswordsecondLable.setPreferredSize(UIConstants.LABLE_SIZE_ITEM);
+        inputPasswordsecondButton.setPreferredSize(UIConstants.LABLE_SIZE_ITEM);
+
+
         watermarkPanel.setPreferredSize(UIConstants.PICTURE_SIZE);
         picturePanel.setPreferredSize(UIConstants.PICTURE_SIZE);
         progressBar.setPreferredSize(UIConstants.PROGRESS_BAR_SIZE);
 
         //设置字体
         inputWatermarkLabel.setFont(UIConstants.FONT_NORMAL);
+        inputWatermarkText.setFont(UIConstants.FONT_NORMAL);
+        inputWatermarkButton.setFont(UIConstants.FONT_BUTTON);
+
+        inputWatermarksecondLabel.setFont(UIConstants.FONT_NORMAL);
+        inputWatermarksecondText.setFont(UIConstants.FONT_NORMAL);
+        inputWatermarksecondButton.setFont(UIConstants.FONT_BUTTON);
+
+
         inputPictureLabel.setFont(UIConstants.FONT_NORMAL);
         inputEncryptCombox.setFont(UIConstants.FONT_NORMAL);
         inputEncyptLable.setFont(UIConstants.FONT_NORMAL);
         inputHashLable.setFont(UIConstants.FONT_NORMAL);
         inputHashCombox.setFont(UIConstants.FONT_NORMAL);
-        inputWatermarkText.setFont(UIConstants.FONT_NORMAL);
-        inputWatermarkButton.setFont(UIConstants.FONT_BUTTON);
+
         inputPictureText.setFont(UIConstants.FONT_NORMAL);
         inputPictureButton.setFont(UIConstants.FONT_BUTTON);
         inputPasswordLable.setFont(UIConstants.FONT_NORMAL);
         inputPasswordText.setFont(UIConstants.FONT_NORMAL);
         inputPasswordButton.setFont(UIConstants.FONT_BUTTON);
 
+        inputPasswordsecondLable.setFont(UIConstants.FONT_NORMAL);
+        inputPasswordsecondText.setFont(UIConstants.FONT_NORMAL);
+        inputPasswordsecondButton.setFont(UIConstants.FONT_BUTTON);
+
         //添加组件
         panelGridSetting.add(inputWatermarkLabel);
         panelGridSetting.add(inputWatermarkText);
         panelGridSetting.add(inputWatermarkButton);
+
+        panelGridSetting.add(inputWatermarksecondLabel);
+        panelGridSetting.add(inputWatermarksecondText);
+        panelGridSetting.add(inputWatermarksecondButton);
 
         panelGridSetting.add(inputPictureLabel);
         panelGridSetting.add(inputPictureText);
@@ -208,6 +254,10 @@ class Signature_BMPEncodePanel extends JPanel {
         panelGridSetting.add(inputPasswordLable);
         panelGridSetting.add(inputPasswordText);
         panelGridSetting.add(inputPasswordButton);
+
+        panelGridSetting.add(inputPasswordsecondLable);
+        panelGridSetting.add(inputPasswordsecondText);
+        panelGridSetting.add(inputPasswordsecondButton);
 
         secondPanelGridSetting.add(watermarkPanel);
         secondPanelGridSetting.add(picturePanel);
@@ -263,14 +313,14 @@ class Signature_BMPEncodePanel extends JPanel {
                 super.mousePressed(e);
                 pictureSelect = 0;
                 //if(e.isPopupTrigger()) {
-                    if(watermarkPanel.isEmpty) {
-                        showImage.setEnabled(false);
-                        showHist.setEnabled(false);
-                    }else {
-                        showImage.setEnabled(true);
-                        showHist.setEnabled(true);
-                    }
-                    menuRightClick.show(e.getComponent(),e.getX(),e.getY());
+                if(watermarkPanel.isEmpty) {
+                    showImage.setEnabled(false);
+                    showHist.setEnabled(false);
+                }else {
+                    showImage.setEnabled(true);
+                    showHist.setEnabled(true);
+                }
+                menuRightClick.show(e.getComponent(),e.getX(),e.getY());
                 //}
             }
         });
@@ -289,7 +339,7 @@ class Signature_BMPEncodePanel extends JPanel {
                     showHist.setEnabled(true);
                 }
                 menuRightClick.show(e.getComponent(),e.getX(),e.getY());
-                }
+            }
             //}
         });
 
@@ -310,37 +360,55 @@ class Signature_BMPEncodePanel extends JPanel {
         });
 
         inputWatermarkButton.addActionListener(e -> {
-                    JFileChooser WatermarkFile = new JFileChooser();
-                    WatermarkFile.setDialogTitle(PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.WATERMARK"));
-                    int returnWatermarkVal = WatermarkFile.showOpenDialog(null);
-                    if (JFileChooser.APPROVE_OPTION == returnWatermarkVal) {
-                        //打印出文件的路径，你可以修改位 把路径值 写到 textField 中
-                        File watermarkSpecificFile = WatermarkFile.getSelectedFile();
-                        inputWatermarkText.setText(watermarkSpecificFile.getAbsolutePath());
-                        watermarkPanel.setImagePath(inputWatermarkText.getText());
-                        watermarkPanel.updateUI();
-                        fileNameWatermark = watermarkSpecificFile.getName();
-                        isWatermarkLoaded = true;
-                        tip.setText(PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.WATERMARK.SUCCESS"));
-                    }
-                });
+            JFileChooser WatermarkFile = new JFileChooser();
+            WatermarkFile.setDialogTitle(PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.WATERMARK"));
+            int returnWatermarkVal = WatermarkFile.showOpenDialog(null);
+            if (JFileChooser.APPROVE_OPTION == returnWatermarkVal) {
+                //打印出文件的路径，你可以修改位 把路径值 写到 textField 中
+                File watermarkSpecificFile = WatermarkFile.getSelectedFile();
+                inputWatermarkText.setText(watermarkSpecificFile.getAbsolutePath());
+                watermarkPanel.setImagePath(inputWatermarkText.getText());
+                watermarkPanel.updateUI();
+                fileNameWatermark = watermarkSpecificFile.getName();
+                isWatermarkLoaded = true;
+                tip.setText(PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.WATERMARK.SUCCESS"));
+            }
+        });
+
+        inputWatermarksecondButton.addActionListener(e -> {
+            JFileChooser WatermarkFile = new JFileChooser();
+            WatermarkFile.setDialogTitle(PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.WATERMARK"));
+            int returnWatermarkVal = WatermarkFile.showOpenDialog(null);
+            if (JFileChooser.APPROVE_OPTION == returnWatermarkVal) {
+                //打印出文件的路径，你可以修改位 把路径值 写到 textField 中
+                File watermarkSpecificFile = WatermarkFile.getSelectedFile();
+                inputWatermarksecondText.setText(watermarkSpecificFile.getAbsolutePath());
+                bufferedImageFirstWatermark = watermarkPanel.getOrigin();
+                watermarkPanel.setImagePath(inputWatermarksecondText.getText());
+                watermarkPanel.updateUI();
+                fileNameWatermark = watermarkSpecificFile.getName();
+                isWatermarkLoaded = true;
+                tip.setText(PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.WATERMARK.SUCCESS"));
+            }
+        });
+
 
         inputPictureButton.addActionListener(e -> {
-                JFileChooser PictureFile = new JFileChooser();
-                PictureFile.setDialogTitle(PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.PICTURE"));
-                int returnPictureVal = PictureFile.showOpenDialog(null);
-                if (JFileChooser.APPROVE_OPTION == returnPictureVal) {
-                    //打印出文件的路径，你可以修改位 把路径值 写到 textField 中
-                    File PictureSpecificFile = PictureFile.getSelectedFile();
-                    inputPictureText.setText(PictureSpecificFile.getAbsolutePath());
-                    picturePanel.setImagePath(inputPictureText.getText());
-                    picturePanel.setPreferredSize(new Dimension(picturePanel.getImgWidth(), picturePanel
-                            .getImgHeight()));
-                    picturePanel.updateUI();
-                    fileNamePicture = PictureSpecificFile.getName();
-                    isPictureLoaded = true;
-                    tip.setText(PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.PICTURE.SUCCESS"));
-                }
+            JFileChooser PictureFile = new JFileChooser();
+            PictureFile.setDialogTitle(PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.PICTURE"));
+            int returnPictureVal = PictureFile.showOpenDialog(null);
+            if (JFileChooser.APPROVE_OPTION == returnPictureVal) {
+                //打印出文件的路径，你可以修改位 把路径值 写到 textField 中
+                File PictureSpecificFile = PictureFile.getSelectedFile();
+                inputPictureText.setText(PictureSpecificFile.getAbsolutePath());
+                picturePanel.setImagePath(inputPictureText.getText());
+                picturePanel.setPreferredSize(new Dimension(picturePanel.getImgWidth(), picturePanel
+                        .getImgHeight()));
+                picturePanel.updateUI();
+                fileNamePicture = PictureSpecificFile.getName();
+                isPictureLoaded = true;
+                tip.setText(PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.PICTURE.SUCCESS"));
+            }
         });
 
         // Choose Hash Algorithm
@@ -366,14 +434,17 @@ class Signature_BMPEncodePanel extends JPanel {
                     if((inputEncryptCombox.getSelectedIndex()==0)){
                         WMProperties.changeAlgorithm("ENCRYP.EMBED",PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.ENCRPT.FIRST"));
                         inputPasswordButton.setEnabled(false);
+                        inputPasswordsecondButton.setEnabled(false);
                     }
                     else if((inputEncryptCombox.getSelectedIndex()==1)){
                         WMProperties.changeAlgorithm("ENCRYP.EMBED",PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.ENCRPT.SECOND"));
                         inputPasswordButton.setEnabled(true);
+                        inputPasswordsecondButton.setEnabled(true);
                     }
                     else if((inputEncryptCombox.getSelectedIndex()==2)){
                         WMProperties.changeAlgorithm("ENCRYP.EMBED",PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.ENCRPT.THIRD"));
                         inputPasswordButton.setEnabled(false);
+                        inputPasswordsecondButton.setEnabled(false);
                     }
                 }
             }
@@ -389,6 +460,20 @@ class Signature_BMPEncodePanel extends JPanel {
             }
         });
 
+
+        inputPasswordsecondButton.addActionListener(e -> {
+            if(inputPasswordsecondText.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(MainWindow.frame,PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.PASSWORD.WARNING"),
+                        PropertiesLocale.getProperty("UI.MESSAGEDIALOG.TITLE"),JOptionPane.WARNING_MESSAGE);
+            }else {
+                RSA_Encryption.saveFile(inputPasswordsecondText.getText().trim(),RSA_Encryption.TYPE_PRIVATE_KEY);
+                tip.setText(PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.PASSWORD.TIP"));
+            }
+        });
+
+
+
+
         // Activate Button
         confirmButton.addActionListener(e -> {
             if(!isPictureLoaded) {
@@ -398,6 +483,9 @@ class Signature_BMPEncodePanel extends JPanel {
                 JOptionPane.showMessageDialog(MainWindow.frame,PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.WATERMARK.WARNING"),
                         PropertiesLocale.getProperty("UI.MESSAGEDIALOG.TITLE"),JOptionPane.WARNING_MESSAGE);
             }else if(inputPasswordText.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(MainWindow.frame,PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.PASSWORD.WARNING"),
+                        PropertiesLocale.getProperty("UI.MESSAGEDIALOG.TITLE"),JOptionPane.WARNING_MESSAGE);
+            }else if(inputPasswordsecondText.getText().trim().isEmpty()) {
                 JOptionPane.showMessageDialog(MainWindow.frame,PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.PASSWORD.WARNING"),
                         PropertiesLocale.getProperty("UI.MESSAGEDIALOG.TITLE"),JOptionPane.WARNING_MESSAGE);
             }else {
@@ -418,31 +506,36 @@ class Signature_BMPEncodePanel extends JPanel {
                     }
 
                     String password = inputPasswordText.getText().trim();
+                    String passwordsecond = inputPasswordsecondText.getText().trim();
 
                     BufferedImage carrierImage = picturePanel.getOrigin();
 
                     BufferedImage watermarkImage = watermarkPanel.getOrigin();
 
-                    byte[] pictureSummary = PictureHash.operate(carrierImage);
+
                     tip.setText(PropertiesLocale.getProperty("UI,SIGNATURE.BMPENCODE.PROGRESS.CALHASH"));
                     progressBar.setValue(7);
 
-                    BufferedImage watermark = Conver.compress(watermarkImage);
+                    BufferedImage watermarkFirst = Conver.compress(bufferedImageFirstWatermark);
+                    BufferedImage watermarksecond = Conver.compress(watermarkImage);
 
-                    watermark = Conver.binaryImage(watermark);
+                    watermarkFirst = Conver.binaryImage(watermarkFirst);
+                    watermarksecond = Conver.binaryImage(watermarksecond);
 
-                    int[][] binaryWatermark = Conver.binary2Matrix(watermark);
+                    int[][] binaryWatermark = Conver.binary2Matrix(watermarkFirst);
+                    int[][] binarysecondWatermark = Conver.binary2Matrix(watermarksecond);
+
                     tip.setText(PropertiesLocale.getProperty("UI,SIGNATURE.BMPENCODE.PROGRESS.WMBINARY"));
-                    progressBar.setValue(29);
+                    progressBar.setValue(20);
                     //binaryWatermark = ImageWall.fillPiece(carrierImage,binaryWatermark);
 
                     new ImageWall(carrierImage,binaryWatermark);
+
                     tip.setText(PropertiesLocale.getProperty("UI,SIGNATURE.BMPENCODE.PROGRESS.WALLGENERATE"));
-                    progressBar.setValue(46);
+                    progressBar.setValue(33);
 
 
-
-
+                    /*
                     BufferedImage justTest = Conver.matrix2BufferImage(ImageWall.matrixOutput(),carrierImage);
 
                     File newFile = new File(UI.tools.ToolConstants.CURRENT_DIR +
@@ -452,20 +545,28 @@ class Signature_BMPEncodePanel extends JPanel {
                     } catch (IOException e2) {
                         e2.printStackTrace();
                     }
+                    */
 
-
-
-
+                    //Insert Hash of A Whole Hash
+                    /*byte[] pictureSummary = PictureHash.operate(carrierImage);
 
                     if(hashType == Wong.HASH_TYPE_SHA1) {
                         ImageWall.insertHash(DigestUtils.sha(pictureSummary));
                     }else if(hashType == Wong.HASH_TYPE_MD5) {
                         ImageWall.insertHash(DigestUtils.md5(pictureSummary));
+                    }*/
+
+                    //Insert Hash According to
+                    if(hashType == Wong.HASH_TYPE_SHA1) {
+                        ImageWall.insertIndividualHash(carrierImage, hashType);
+                    }else if(hashType == Wong.HASH_TYPE_MD5) {
+                        ImageWall.insertIndividualHash(carrierImage, hashType);
                     }
                     tip.setText(PropertiesLocale.getProperty("UI,SIGNATURE.BMPENCODE.PROGRESS.HASHINSERT"));
-                    progressBar.setValue(60);
+                    progressBar.setValue(42);
 
 
+                    /*
                     justTest = Conver.matrix2BufferImage(ImageWall.matrixOutput(),carrierImage);
                     newFile = new File(UI.tools.ToolConstants.CURRENT_DIR +
                             File.separator + "src" + File.separator + "异或后的矩阵.bmp");
@@ -474,9 +575,7 @@ class Signature_BMPEncodePanel extends JPanel {
                     } catch (IOException e2) {
                         e2.printStackTrace();
                     }
-
-
-
+                    */
 
 
                     if(encrptionType == Wong.ENCRYP_TYPE_AES) {
@@ -487,15 +586,14 @@ class Signature_BMPEncodePanel extends JPanel {
                         ImageWall.encrypt(password, ImageWall.ENCRYP_TYPE_DES);
                     }
                     tip.setText(PropertiesLocale.getProperty("UI,SIGNATURE.BMPENCODE.PROGRESS.ENCRYINSERT"));
-                    progressBar.setValue(72);
+                    progressBar.setValue(55);
 
                     binaryWatermark = ImageWall.matrixOutput();
 
-
-
+                    /*
                     justTest = Conver.matrix2BufferImage(ImageWall.matrixOutput(),carrierImage);
                     tip.setText(PropertiesLocale.getProperty("UI,SIGNATURE.BMPENCODE.PROGRESS.MATRIXOUTPUT"));
-                    progressBar.setValue(87);
+                    progressBar.setValue(64);
 
                     newFile = new File(UI.tools.ToolConstants.CURRENT_DIR +
                             File.separator + "src" + File.separator + "最终矩阵.bmp");
@@ -504,47 +602,99 @@ class Signature_BMPEncodePanel extends JPanel {
                     } catch (IOException e2) {
                         e2.printStackTrace();
                     }
+                    */
+
+                    // Second
+                    new ImageWall(carrierImage,binarysecondWatermark);
+
+                    tip.setText(PropertiesLocale.getProperty("UI,SIGNATURE.BMPENCODE.PROGRESS.WALLGENERATE"));
+                    progressBar.setValue(72);
+
+                    //Insert Hash of A Whole Hash
+                    /*byte[] pictureSummary = PictureHash.operate(carrierImage);
+
+                    if(hashType == Wong.HASH_TYPE_SHA1) {
+                        ImageWall.insertHash(DigestUtils.sha(pictureSummary));
+                    }else if(hashType == Wong.HASH_TYPE_MD5) {
+                        ImageWall.insertHash(DigestUtils.md5(pictureSummary));
+                    }*/
+
+                    //Insert Hash According to
+                    if(hashType == Wong.HASH_TYPE_SHA1) {
+                        ImageWall.insertIndividualHash(carrierImage, hashType);
+                    }else if(hashType == Wong.HASH_TYPE_MD5) {
+                        ImageWall.insertIndividualHash(carrierImage, hashType);
+                    }
+                    tip.setText(PropertiesLocale.getProperty("UI,SIGNATURE.BMPENCODE.PROGRESS.HASHINSERT"));
+                    progressBar.setValue(83);
 
 
+                    if(encrptionType == Wong.ENCRYP_TYPE_AES) {
+                        ImageWall.encrypt(passwordsecond, ImageWall.ENCRYP_TYPE_AES);
+                    }else if(encrptionType == Wong.ENCRYP_TYPE_RSA) {
+                        ImageWall.encrypt(passwordsecond, ImageWall.ENCRYP_TYPE_RSA);
+                    }else if(encrptionType == Wong.ENCRYP_TYPE_DES) {
+                        ImageWall.encrypt(passwordsecond, ImageWall.ENCRYP_TYPE_DES);
+                    }
+                    tip.setText(PropertiesLocale.getProperty("UI,SIGNATURE.BMPENCODE.PROGRESS.ENCRYINSERT"));
+                    progressBar.setValue(92);
 
-                    outputImage = MatrixEncoding.embed(carrierImage,binaryWatermark,binaryWatermark);//TODO About the difference between low and high
+                    binarysecondWatermark = ImageWall.matrixOutput();
+
+                    outputImage = MatrixEncoding.embed(carrierImage,binaryWatermark,binarysecondWatermark);
                     tip.setText(PropertiesLocale.getProperty("UI,SIGNATURE.BMPENCODE.PROGRESS.ENCODED"));
                     progressBar.setValue(100);
 
                     System.out.println(outputImage.getWidth());
                     System.out.println(outputImage.getHeight());
+
+
+
+                    // Show Hist of Embeded Picture
+                    JDialog imageDialog = new JDialog(MainWindow.frame, "Embeded");
+                    Container contentPane = imageDialog.getContentPane();
+                    JLabel picture = new JLabel();
+                    Icon icon = new ImageIcon(Conver.getHist(outputImage));
+                    picture.setIcon(icon);
+                    picture.setBounds(10, 10, icon.getIconWidth(),icon.getIconHeight());
+
+                    contentPane.add(picture);
+                    imageDialog.setSize(icon.getIconWidth(),icon.getIconHeight());
+                    imageDialog.setLocation(40,40);
+                    imageDialog.setResizable(false);
+                    imageDialog.setVisible(true);
+
+
+
                 }).start();
                 saveButton.setEnabled(true);
             }
         });
 
-        saveButton.addActionListener(e -> {
-            new Thread(() -> {
-                JFileChooser chooser = new JFileChooser();
-                FileNameExtensionFilter filter;
-                String extension = "bmp";
-                filter = new FileNameExtensionFilter(
-                            "." + extension, extension);
-                chooser.setFileFilter(filter);
+        saveButton.addActionListener(e -> new Thread(() -> {
+            JFileChooser chooser = new JFileChooser();
+            FileNameExtensionFilter filter;
+            String extension = "bmp";
+            filter = new FileNameExtensionFilter(
+                    "." + extension, extension);
+            chooser.setFileFilter(filter);
 
-                int option = chooser.showSaveDialog(null);
-                if(option==JFileChooser.APPROVE_OPTION){
-                    File file = chooser.getSelectedFile();
-                    String fname = chooser.getName(file);
+            int option = chooser.showSaveDialog(null);
+            if(option==JFileChooser.APPROVE_OPTION){
+                File file = chooser.getSelectedFile();
+                String fname = chooser.getName(file);
 
-                    if(!fname.contains( "." + extension )){
-                        file = new File(chooser.getCurrentDirectory(),fname+"."+extension);
-                    }
-
-                    try {
-                        ImageIO.write(outputImage, "bmp", file);
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
-                    }
-                    tip.setText(PropertiesLocale.getProperty("UI,SIGNATURE.BMPENCODE.PROGRESS.SAVED"));
-
+                if(!fname.contains( "." + extension )){
+                    file = new File(chooser.getCurrentDirectory(),fname+"."+extension);
                 }
-            }).start();
-        });
+
+                try {
+                    ImageIO.write(outputImage, "bmp", file);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                tip.setText(PropertiesLocale.getProperty("UI,SIGNATURE.BMPENCODE.PROGRESS.SAVED"));
+            }
+        }).start());
     }
 }

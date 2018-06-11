@@ -19,7 +19,7 @@ public class UIConstants {
      * 软件名称,版本
      */
     public final static String APP_NAME = "Malice";
-    public final static String APP_VERSION = "v_1.60_160511";
+    public final static String APP_VERSION = "v_1.00";
 
     /**
      * 主窗口大小

@@ -47,7 +47,7 @@ public class MainWindow {
         frame = new JFrame();
         frame.setBounds(UIConstants.MAIN_WINDOW_X, UIConstants.MAIN_WINDOW_Y, UIConstants.MAIN_WINDOW_WIDTH,
                 UIConstants.MAIN_WINDOW_HEIGHT);
-        frame.setTitle(UIConstants.APP_NAME);
+        frame.setTitle(UIConstants.APP_NAME + "  -  " + UIConstants.APP_VERSION);
         frame.setIconImage(UIConstants.IMAGE_ICON);
         frame.setBackground(UIConstants.MAIN_BACK_COLOR);
         mainPanel = new JPanel(true);

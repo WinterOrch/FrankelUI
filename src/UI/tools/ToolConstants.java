@@ -25,6 +25,7 @@ public class ToolConstants {
      */
     public final static int AES_KEYSIZE = 128;
     public final static int RSA_KEYSIZE = 1024;
+    public final static int DES_KEYSIZE = 56;
 
     /**
      * Extension File Name of Key File

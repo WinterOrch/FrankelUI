@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="FrankelUI:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/FrankelUI_jar</output-path>
+    <root id="archive" name="FrankelUI.jar">
+      <element id="module-output" name="FrankelUI" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/commons-codec-1.2.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

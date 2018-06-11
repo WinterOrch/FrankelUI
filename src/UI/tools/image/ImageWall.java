@@ -1,11 +1,11 @@
 package UI.tools.image;
-import UI.MainWindow;
 
-import javax.imageio.ImageIO;
+import UI.tools.watermarking.PictureHash;
+import UI.tools.watermarking.Wong;
+import org.apache.commons.codec.digest.DigestUtils;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
-import java.util.Objects;
 
 /**
  * ImageWall class is used to embed a single watermark binary image into the whole picture.
@@ -141,14 +141,17 @@ public class ImageWall {
         return outputMatrix;
     }
 
-    public static BufferedImage wall2BufferImage(){
+    public static void insertIndividualHash(BufferedImage originImage, int hashType) {
 
-        BufferedImage outputImage = new BufferedImage(height, width,BufferedImage.TYPE_INT_RGB);
+        for(int i = 0; i < height; i++) {
+            for(int j = 0; j < width; j++) {
+                if (hashType == Wong.HASH_TYPE_SHA1)
+                    wall[i][j].insertHash(DigestUtils.sha(PictureHash.operateBrick(originImage, j, i)));
+                else if(hashType == Wong.HASH_TYPE_MD5)
+                    wall[i][j].insertHash(DigestUtils.md5(PictureHash.operateBrick(originImage, j, i)));
+            }
+        }
 
-
-
-        return outputImage;
     }
-
 
 }

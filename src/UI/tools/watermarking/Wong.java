@@ -1,5 +1,6 @@
 package UI.tools.watermarking;
 
+import UI.panel.Signature_BMPDecodePanel;
 import UI.tools.image.Conver;
 import UI.tools.image.ImageWall;
 import UI.tools.insert.MatrixEncoding;
@@ -109,93 +110,55 @@ public class Wong {
         return status;
     }
 
-    public static int decodePictureFirst(BufferedImage carrierImage, String password, int hashType,
-                                         int encryptionType, File savePath, File certificate) {
-        int status=0;
-        /**生成图片的HASH
-         */
-        byte[] pictureSummary = PictureHash.operate(carrierImage);
-        BufferedImage m = Conver.matrix2BufferImage(MatrixEncoding.getLowBit(carrierImage),carrierImage);
-        try {
-            ImageIO.write(m, "bmp", new File("E:/new.bmp"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        new ImageWall(carrierImage, MatrixEncoding.getLowBit(carrierImage));
+    public static void decodePictureFirst(BufferedImage carrierImage, String password, int hashType,
+                                          int encryptionType, File savePath, File certificate) {
 
-        ImageWall.decrypt("334", 0, null);
-        BufferedImage output = Conver.matrix2BufferImage(ImageWall.matrixOutput(),carrierImage);
-        try {
-            ImageIO.write(output, "bmp", new File("F:/new.bmp"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            //生成图片的HASH
+            Signature_BMPDecodePanel.progressBar.setValue(7);
+            new ImageWall(carrierImage, MatrixEncoding.getLowBit(carrierImage));
 
-        return status;
-        /*
-        if (encryptionType == ENCRYP_TYPE_AES) {
-            ImageWall.decrypt(password, ENCRYP_TYPE_AES, null);
-            status = ImageWall.insertHash(pictureSummary);
-        }
-        if (encryptionType == ENCRYP_TYPE_RSA) {
-            ImageWall.decrypt(null, ENCRYP_TYPE_RSA, certificate);
-            status = ImageWall.insertHash(pictureSummary);
-        }
-        BufferedImage output = Conver.matrix2BufferImage(ImageWall.matrixOutput(),carrierImage);
-        try {
-            ImageIO.write((Objects.requireNonNull(output)), "bmp", savePath);
-        } catch (IOException e) {
-            e.printStackTrace();
-            status = FILE_OUTPUT_ERROR;
-            return status;
-        }
-        status = EMBED_SUCESS_OPTION;
-        return status;
-       */
-    }
+            Signature_BMPDecodePanel.progressBar.setValue(22);
+            if (encryptionType == ENCRYP_TYPE_DES)
+                ImageWall.decrypt(password, ImageWall.ENCRYP_TYPE_DES, null);
+            if (hashType == Wong.HASH_TYPE_SHA1)
+                ImageWall.insertIndividualHash(carrierImage,Wong.HASH_TYPE_SHA1);
+            else if (hashType == Wong.HASH_TYPE_MD5)
+                ImageWall.insertIndividualHash(carrierImage,Wong.HASH_TYPE_MD5);
 
+            Signature_BMPDecodePanel.progressBar.setValue(36);
+            BufferedImage output = Conver.matrix2BufferImage(ImageWall.matrixOutput(), carrierImage);
 
-/*    private int decodePictureSecond(BufferedImage carrierImage, BufferedImage watermarkImage, String password, int hashType,
-                                   int encryptionType, File savePath, File certificate) {
-        int status = 0;
-        /**生成图片的HASH
-
-        byte[] pictureSummary = PictureHash.operate(carrierImage);
-        new ImageWall(carrierImage, MatrixEncoding.getHighBit(carrierImage));
-        ImageWall.decrypt(password, ENCRYP_TYPE_AES, null);
-        BufferedImage output = Conver.matrix2BufferImage(ImageWall.matrixOutput(),carrierImage);
-
-        try {
-            ImageIO.write((Objects.requireNonNull(output)), "bmp", savePath);
-            return status;
-        } catch (IOException e) {
-            e.printStackTrace();
-            status = FILE_OUTPUT_ERROR;
-            return status;
-        }
-
-        if (encryptionType == ENCRYP_TYPE_AES) {
-            ImageWall.decrypt(password, ENCRYP_TYPE_AES, null);
-            status = ImageWall.insertHash(pictureSummary);
-        }
-        if (encryptionType == ENCRYP_TYPE_RSA) {
-            ImageWall.decrypt(null, ENCRYP_TYPE_RSA, certificate);
-            status = ImageWall.insertHash(pictureSummary);
-        }
-        BufferedImage output = Conver.matrix2BufferImage(ImageWall.matrixOutput(),carrierImage);
-        try {
-            ImageIO.write((Objects.requireNonNull(output)), "bmp", savePath);
-        } catch (IOException e) {
-            e.printStackTrace();
-            status = FILE_OUTPUT_ERROR;
-            return status;
-        }
-        status = EMBED_SUCESS_OPTION;
-        return status;
-
-    }*/
+            Signature_BMPDecodePanel.progressBar.setValue(54);
+            Signature_BMPDecodePanel.resultPictureOne = output;
 
     }
+
+
+
+
+    public static void decodePictureSecond(BufferedImage carrierImage, String password, int hashType,
+                                          int encryptionType, File savePath, File certificate) {
+
+            //生成图片的HASH
+
+            Signature_BMPDecodePanel.progressBar.setValue(62);
+            new ImageWall(carrierImage, MatrixEncoding.getHighBit((carrierImage)));
+
+            Signature_BMPDecodePanel.progressBar.setValue(76);
+            if (encryptionType == ENCRYP_TYPE_DES)
+                ImageWall.decrypt(password, ImageWall.ENCRYP_TYPE_DES, null);
+            if (hashType == Wong.HASH_TYPE_SHA1)
+                ImageWall.insertIndividualHash(carrierImage, Wong.HASH_TYPE_SHA1);
+            else if (hashType == Wong.HASH_TYPE_MD5)
+                ImageWall.insertIndividualHash(carrierImage, Wong.HASH_TYPE_MD5);
+
+            Signature_BMPDecodePanel.progressBar.setValue(93);
+            BufferedImage output = Conver.matrix2BufferImage(ImageWall.matrixOutput(), carrierImage);
+
+            Signature_BMPDecodePanel.progressBar.setValue(100);
+            Signature_BMPDecodePanel.resultPictureTwo = output;
+    }
+}
 
 
 

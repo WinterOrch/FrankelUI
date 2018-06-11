@@ -9,7 +9,8 @@ import java.util.Objects;
 public class HashTest {
 
     public static void main(String[] args) {
-        System.out.println(HexConver.byte2HexStr(DigestUtils.sha("all work and no play makes jack a dull boy."),20));
+        System.out.println(HexConver.byte2HexStr(DigestUtils.md5("all work and no play makes jack a dull boy."),
+                DigestUtils.md5("all work and no play makes jack a dull boy.").length));
 
 
         /*
