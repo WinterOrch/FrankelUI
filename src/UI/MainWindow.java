@@ -134,7 +134,7 @@ public class MainWindow {
         EventQueue.invokeLater(() -> {
             try {
                 MainWindow window = new MainWindow();
-                window.frame.setVisible(true);
+                frame.setVisible(true);
             } catch (Exception e) {
                 e.printStackTrace();
             }

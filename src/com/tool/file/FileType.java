@@ -1,5 +1,8 @@
 package com.tool.file;
 
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
@@ -127,15 +130,30 @@ public class FileType {
         return res;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
-        String type = getFileType("C:/test/eee.WMV");
-        System.out.println("eee.WMV : "+type);
-        System.out.println();
+        final BASE64Encoder encoder = new BASE64Encoder();
+        final BASE64Decoder decoder = new BASE64Decoder();
 
-        type = getFileType("C:/test/350996.wav");
-        System.out.println("350996.wav : "+type);
-        System.out.println();
+        final byte[] textByte = {(byte)0xF0, (byte)0x6C, (byte)0xE1, (byte)0x69,
+                (byte)0xEE, (byte)0x74, (byte)0x62, (byte)0x78, (byte)0x74};
+//编码
+        final String encodedText = encoder.encode(textByte);
+        System.out.println(encodedText);
+//解码
+        System.out.println(new String(decoder.decodeBuffer(encodedText), "UTF-8"));
 
+        /*
+        final BASE64Encoder encoder = new BASE64Encoder();
+        final BASE64Decoder decoder = new BASE64Decoder();
+        final String text = "字串文字";
+        final byte[] textByte = text.getBytes("UTF-8");
+//编码
+        final String encodedText = encoder.encode(textByte);
+        System.out.println(encodedText);
+
+//解码
+        System.out.println(new String(decoder.decodeBuffer(encodedText), "UTF-8"));
+*/
     }
 }

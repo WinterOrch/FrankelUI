@@ -39,11 +39,11 @@ public class Signature_BMPDecodePanel extends JPanel{
     private JButton inputEmbededWatermarkButton = new JButton();
 
     private JLabel inputPasswordLable = new JLabel();
-    private JTextField inputPasswordText = new JTextField();
+    private JPasswordField inputPasswordText = new JPasswordField();
     private JButton inputPasswordButton = new JButton();
 
     private JLabel inputPasswordLable2 = new JLabel();
-    private JTextField inputPasswordText2 = new JTextField();
+    private JPasswordField inputPasswordText2 = new JPasswordField();
     private JButton inputPasswordButton2 = new JButton();
 
     public static ProgressBar progressBar;
@@ -392,12 +392,12 @@ public class Signature_BMPDecodePanel extends JPanel{
             if( e.getStateChange() == ItemEvent.SELECTED ){
                 if(e.getSource() == inputEncryptCombox){
                     if((inputEncryptCombox.getSelectedIndex()==0)){
-                        WMProperties.changeAlgorithm("ENCRYP.EMBED",PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.ENCRPT.FIRST"));
+                        WMProperties.changeAlgorithm("ENCRYP.EMBED",PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.ENCRPT.THIRD"));
                         inputPasswordButton.setEnabled(false);
                         inputPasswordButton2.setEnabled(false);
                     }
                     else if((inputEncryptCombox.getSelectedIndex()==1)){
-                        WMProperties.changeAlgorithm("ENCRYP.EMBED",PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.ENCRPT.SECOND"));
+                        WMProperties.changeAlgorithm("ENCRYP.EMBED",PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.ENCRPT.THIRD"));
                         inputPasswordButton.setEnabled(true);
                         inputPasswordButton2.setEnabled(true);
                     }
@@ -419,13 +419,13 @@ public class Signature_BMPDecodePanel extends JPanel{
 
                 if (Objects.requireNonNull(WMProperties.getProperty("HASH.EMBED")).equals("SHA1"))
                     if (Objects.requireNonNull(WMProperties.getProperty("ENCRYP.EMBED")).equals("DES")) {
-                        Wong.decodePictureFirst(origin,inputPasswordText.getText(),Wong.HASH_TYPE_SHA1,Wong.ENCRYP_TYPE_DES,null,null);
-                        Wong.decodePictureSecond(origin,inputPasswordText2.getText(),Wong.HASH_TYPE_SHA1,Wong.ENCRYP_TYPE_DES,null,null);
+                        Wong.decodePictureFirst(origin,new String(inputPasswordText.getPassword()).trim(),Wong.HASH_TYPE_SHA1,Wong.ENCRYP_TYPE_DES,null,null);
+                        Wong.decodePictureSecond(origin,new String(inputPasswordText2.getPassword()).trim(),Wong.HASH_TYPE_SHA1,Wong.ENCRYP_TYPE_DES,null,null);
                     }
                 if (Objects.requireNonNull(WMProperties.getProperty("HASH.EMBED")).equals("MD5"))
                     if (Objects.requireNonNull(WMProperties.getProperty("ENCRYP.EMBED")).equals("DES")) {
-                        Wong.decodePictureFirst(origin,inputPasswordText.getText(),Wong.HASH_TYPE_MD5,Wong.ENCRYP_TYPE_DES,null,null);
-                        Wong.decodePictureSecond(origin,inputPasswordText2.getText(),Wong.HASH_TYPE_MD5,Wong.ENCRYP_TYPE_DES,null,null);
+                        Wong.decodePictureFirst(origin,new String(inputPasswordText.getPassword()).trim(),Wong.HASH_TYPE_MD5,Wong.ENCRYP_TYPE_DES,null,null);
+                        Wong.decodePictureSecond(origin,new String(inputPasswordText2.getPassword()).trim(),Wong.HASH_TYPE_MD5,Wong.ENCRYP_TYPE_DES,null,null);
                     }
             } catch (IOException e1) {
                 e1.printStackTrace();

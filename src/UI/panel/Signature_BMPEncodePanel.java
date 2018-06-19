@@ -9,10 +9,8 @@ import UI.tools.encryption.RSA_Encryption;
 import UI.tools.image.Conver;
 import UI.tools.image.ImageWall;
 import UI.tools.insert.MatrixEncoding;
-import UI.tools.watermarking.PictureHash;
 import UI.tools.watermarking.WMProperties;
 import UI.tools.watermarking.Wong;
-import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -50,11 +48,11 @@ class Signature_BMPEncodePanel extends JPanel {
     private JTextField inputPictureText = new JTextField();
     private JButton inputPictureButton = new JButton();
     private JLabel inputPasswordLable = new JLabel();
-    private JTextField inputPasswordText = new JTextField();
+    private JPasswordField inputPasswordText = new JPasswordField();
     private JButton inputPasswordButton = new JButton();
 
     private JLabel inputPasswordsecondLable = new JLabel();
-    private JTextField inputPasswordsecondText = new JTextField();
+    private JPasswordField inputPasswordsecondText = new JPasswordField();
     private JButton inputPasswordsecondButton = new JButton();
     private JLabel tip;
 
@@ -148,7 +146,7 @@ class Signature_BMPEncodePanel extends JPanel {
         inputEncryptCombox.addItem(PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.ENCRPT.THIRD"));
         inputPasswordLable.setText(PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.PASSWORD.LABLE"));
         inputPasswordButton.setText(PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.PASSWORD.BUTTON"));
-        inputPasswordsecondLable.setText(PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.PASSWORD.LABLE"));
+        inputPasswordsecondLable.setText(PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.PASSWORD2.LABLE"));
         inputPasswordsecondButton.setText(PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.PASSWORD.BUTTON"));
 
         progressBar = new ProgressBar(0,100);
@@ -432,12 +430,12 @@ class Signature_BMPEncodePanel extends JPanel {
             if( e.getStateChange() == ItemEvent.SELECTED ){
                 if(e.getSource() == inputEncryptCombox){
                     if((inputEncryptCombox.getSelectedIndex()==0)){
-                        WMProperties.changeAlgorithm("ENCRYP.EMBED",PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.ENCRPT.FIRST"));
+                        WMProperties.changeAlgorithm("ENCRYP.EMBED",PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.ENCRPT.THIRD"));
                         inputPasswordButton.setEnabled(false);
                         inputPasswordsecondButton.setEnabled(false);
                     }
                     else if((inputEncryptCombox.getSelectedIndex()==1)){
-                        WMProperties.changeAlgorithm("ENCRYP.EMBED",PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.ENCRPT.SECOND"));
+                        WMProperties.changeAlgorithm("ENCRYP.EMBED",PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.ENCRPT.THIRD"));
                         inputPasswordButton.setEnabled(true);
                         inputPasswordsecondButton.setEnabled(true);
                     }
@@ -451,22 +449,22 @@ class Signature_BMPEncodePanel extends JPanel {
         });
 
         inputPasswordButton.addActionListener(e -> {
-            if(inputPasswordText.getText().trim().isEmpty()) {
+            if(new String(inputPasswordText.getPassword()).trim().isEmpty()) {
                 JOptionPane.showMessageDialog(MainWindow.frame,PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.PASSWORD.WARNING"),
                         PropertiesLocale.getProperty("UI.MESSAGEDIALOG.TITLE"),JOptionPane.WARNING_MESSAGE);
             }else {
-                RSA_Encryption.saveFile(inputPasswordText.getText().trim(),RSA_Encryption.TYPE_PRIVATE_KEY);
+                RSA_Encryption.saveFile(new String(inputPasswordText.getPassword()).trim(),RSA_Encryption.TYPE_PRIVATE_KEY);
                 tip.setText(PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.PASSWORD.TIP"));
             }
         });
 
 
         inputPasswordsecondButton.addActionListener(e -> {
-            if(inputPasswordsecondText.getText().trim().isEmpty()) {
+            if(new String(inputPasswordsecondText.getPassword()).trim().isEmpty()) {
                 JOptionPane.showMessageDialog(MainWindow.frame,PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.PASSWORD.WARNING"),
                         PropertiesLocale.getProperty("UI.MESSAGEDIALOG.TITLE"),JOptionPane.WARNING_MESSAGE);
             }else {
-                RSA_Encryption.saveFile(inputPasswordsecondText.getText().trim(),RSA_Encryption.TYPE_PRIVATE_KEY);
+                RSA_Encryption.saveFile(new String(inputPasswordsecondText.getPassword()).trim(),RSA_Encryption.TYPE_PRIVATE_KEY);
                 tip.setText(PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.PASSWORD.TIP"));
             }
         });
@@ -482,10 +480,10 @@ class Signature_BMPEncodePanel extends JPanel {
             }else if(!isWatermarkLoaded) {
                 JOptionPane.showMessageDialog(MainWindow.frame,PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.WATERMARK.WARNING"),
                         PropertiesLocale.getProperty("UI.MESSAGEDIALOG.TITLE"),JOptionPane.WARNING_MESSAGE);
-            }else if(inputPasswordText.getText().trim().isEmpty()) {
+            }else if(new String(inputPasswordText.getPassword()).trim().isEmpty()) {
                 JOptionPane.showMessageDialog(MainWindow.frame,PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.PASSWORD.WARNING"),
                         PropertiesLocale.getProperty("UI.MESSAGEDIALOG.TITLE"),JOptionPane.WARNING_MESSAGE);
-            }else if(inputPasswordsecondText.getText().trim().isEmpty()) {
+            }else if(new String(inputPasswordsecondText.getPassword()).trim().isEmpty()) {
                 JOptionPane.showMessageDialog(MainWindow.frame,PropertiesLocale.getProperty("UI.SIGNATURE.BMPENCODE.PASSWORD.WARNING"),
                         PropertiesLocale.getProperty("UI.MESSAGEDIALOG.TITLE"),JOptionPane.WARNING_MESSAGE);
             }else {
@@ -505,8 +503,8 @@ class Signature_BMPEncodePanel extends JPanel {
                         default: encrptionType = Wong.ENCRYP_TYPE_DES;//TODO
                     }
 
-                    String password = inputPasswordText.getText().trim();
-                    String passwordsecond = inputPasswordsecondText.getText().trim();
+                    String password = new String(inputPasswordText.getPassword()).trim();
+                    String passwordsecond = new String(inputPasswordsecondText.getPassword()).trim();
 
                     BufferedImage carrierImage = picturePanel.getOrigin();
 
